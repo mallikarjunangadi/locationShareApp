@@ -1,0 +1,27 @@
+<ion-view ng-controller="settingsCtrl">
+    <ion-header-bar class="sub-head bar-dark">
+        <button style="color: white;" ng-click="goBack()" class="button">Back</button>
+    </ion-header-bar>
+    <ion-content>
+        <div class="list">
+            <label class="item item-input">
+                <span class="input-label">Name:</span>
+                <input type="text" ng-model="sender.name" placeholder="Enter Your Name"></input>
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Number:</span>
+                <input type="text" ng-model="sender.number" placeholder="Enter Your Number"></input>
+            </label>
+        </div>
+      <hr/> 
+      <h3>Enter Numbers to send SMS</h3>
+        <div class="list">
+            <div class="item item-input-inset">
+                <label class="item-input-wrapper">
+                    <input type="tel" ng-model="reciever.number" placeholder="Enter 10 Reciever Numbers"></input>
+                </label>
+                <button class="button button-small" ng-click="addNumber()" ng-disabled="disableNumberAdd">Add</button>
+            </div>
+            <p>{{recieverNumbers}}</p>
+    </ion-content>
+</ion-view>
