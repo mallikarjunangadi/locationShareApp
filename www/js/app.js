@@ -20,6 +20,8 @@ angular.module('starter', ['ionic','starter.controller','ngCordova'])
     if(window.StatusBar) {
       StatusBar.styleDefault();
     }
+   // localStorage.setItem('recieverNumbers', '');
+   //localStorage.setItem('senderDetails', '');
     $rootScope.recieverNumbers = [];
   });
 })

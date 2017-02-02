@@ -13,6 +13,7 @@
                 <input type="text" ng-model="sender.number" placeholder="Enter Your Number"></input>
             </label>
         </div>
+        <button class="button button-block" ng-click="saveSender()">Save</button>
       <hr/> 
       <h3>Enter Numbers to send SMS</h3>
         <div class="list">
@@ -22,6 +23,10 @@
                 </label>
                 <button class="button button-small" ng-click="addNumber()" ng-disabled="disableNumberAdd">Add</button>
             </div>
-            <p>{{recieverNumbers}}</p>
+            <ion-list>
+             <ion-item ng-repeat="number in recieverNumbers track by number">
+              <span>{{number}}<span> <span style="right:1vh;color:red;position:absolute;" ng-click="deleteNumber($index)">X</span>
+             </ion-item>
+            </ion-list>
     </ion-content>
 </ion-view>
