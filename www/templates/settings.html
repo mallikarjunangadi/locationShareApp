@@ -10,12 +10,13 @@
             </label>
             <label class="item item-input">
                 <span class="input-label">Number:</span>
-                <input type="text" ng-model="sender.number" placeholder="Enter Your Number"></input>
+                <input type="tel" ng-model="sender.number" placeholder="Enter Your Number"></input>
             </label>
         </div>
+  <!--      <span ng-show="showSenderErrorMsg" style="color:red;">Invalid name or number</span>  -->
         <button class="button button-block" ng-click="saveSender()">Save</button>
       <hr/> 
-      <h3>Enter Numbers to send SMS</h3>
+      <h4>Enter Numbers to send SMS</h4>
         <div class="list">
             <div class="item item-input-inset">
                 <label class="item-input-wrapper">
