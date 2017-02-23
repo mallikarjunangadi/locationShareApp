@@ -10,25 +10,14 @@ angular.module('starter.controller', []).controller('SmsCtrl', ['$scope', '$q', 
         }, function(error) {
             deferred.reject('failure');
             alert('Unable to get location: ' + error.message);
-        },{
+        }, {
             enableHighAccuracy: true,
-            maximumAge:Infinity,
-            timeout:5000
+            maximumAge: Infinity,
+            timeout: 15000
         });
         return deferred.promise;
     }
-    /*   
-    var jsonObj = {
-        arr: [{
-            a: 'a' 
-        }, {
-            b: 'b'
-        }]
-    };
-    var strJson = JSON.stringify(jsonObj);
-    console.log(strJson);
-    console.log(angular.fromJson(strJson));
-  */
+
     function calldialog() {
         document.addEventListener("deviceready", function() {
             cordova.dialogGPS("Your GPS is Disabled, this app needs to be enable to works.", //message
@@ -49,24 +38,23 @@ angular.module('starter.controller', []).controller('SmsCtrl', ['$scope', '$q', 
         });
     }
     $scope.sendSMS = function() {
-       
+
         console.log($rootScope.recieverNumbers);
         console.log('entered');
-     
+
         cordova.plugins.diagnostic.isLocationAvailable(function(available) {
             console.log("Location is " + (available ? "available" : "not available"));
-            if(!available) {
-                send();
+            if (!available) {
+                calldialog();
             }
-            if(available) {
+            if (available) {
                 send();
             }
         }, function(error) {
             console.error("The following error occurred: " + error);
-        });    
-       
-            
-    } 
+        });
+
+    }
 
     function send() {
         if (!(angular.equals({}, $rootScope.sender))) {
@@ -78,39 +66,31 @@ angular.module('starter.controller', []).controller('SmsCtrl', ['$scope', '$q', 
                         replaceLineBreaks: false,
                         android: {
                             intent: ''
-                        }  
+                        }
                     };
-                    var mapLink = "https://www.google.co.in/maps/@" + $scope.lat + "," + $scope.long + ",15z?hl=en";
-                    console.log($rootScope.recieverNumbers);
-                    var textBody = "Emergency, SOS from Dr." + $rootScope.sender.name + " (" + $rootScope.sender.number + ")  longitude: " + $scope.long + ", Lattitude: " + $scope.lat + " " + "https://www.google.co.in/maps/@" + $scope.lat + "," + $scope.long + ",15z?hl=en";
-                    console.log(textBody);
-                    // alert(textBody); 
+
+                    var textBody = "Emergency, SOS from Dr." + $rootScope.sender.name + " (" + $rootScope.sender.number + ")  longitude: " + $scope.long + ", Lattitude: " + $scope.lat + " " + "\n https://www.google.co.in/maps/@" + $scope.lat + "," + $scope.long + ",15z?hl=en";
                     var successNums = "";
                     var unSuccessNums = "";
                     var totalNum = $rootScope.recieverNumbers.length;
                     var count = 0;
-                      //   var arr = ['8147731228', '9886379322'];
+
                     $rootScope.recieverNumbers.forEach(function(num) {
                         count = count + 1;
                         $cordovaSms.send(num, textBody, options).then(function() {
                             console.log('Success');
-                            //alert('message sent');
-                          //  successNums = successNums + " " + num;
-                          //  console.log(successNums);
+
                         }, function(error) {
                             console.log('Error');
-                         //   unSuccessNums = unSuccessNums + " " + num;
-                          //  console.log(unSuccessNums);
-                            //alert('message not sent');
+
                         });
                         if (count == totalNum) {
                             console.log('message sent successfully...');
                             alert('message sent successfully...');
-                         //   console.log(unSuccessNums);
-                         //   alert("message sent to : " + successNums + "\n messages not sent to : " + unSuccessNums);
+
                         }
                     })
-                }, function(res) { 
+                }, function(res) {
                     console.log(res);
                 })
             }, false);
@@ -123,7 +103,8 @@ angular.module('starter.controller', []).controller('SmsCtrl', ['$scope', '$q', 
         console.log('settings function')
         $state.go('settings');
     }
-}]).controller('settingsCtrl', ['$scope', '$cordovaSms', '$state', '$ionicHistory', '$rootScope', function($scope, $cordovaSms, $state, $ionicHistory, $rootScope) {
+}
+]).controller('settingsCtrl', ['$scope', '$cordovaSms', '$state', '$ionicHistory', '$rootScope', function($scope, $cordovaSms, $state, $ionicHistory, $rootScope) {
     $scope.$on('$ionicView.beforeEnter', function() {
         var numbers = localStorage.getItem('recieverNumbers');
         if (numbers == '' || numbers == null) {
@@ -148,20 +129,17 @@ angular.module('starter.controller', []).controller('SmsCtrl', ['$scope', '$q', 
     $scope.goBack = function() {
         console.log('entered back')
         $ionicHistory.goBack();
-    };
-    
+    }
+    ;
+
     $scope.saveSender = function() {
-      //  if(!(angular.equals({}, $rootScope.sender)) && $rootScope.sender.name && $rootScope.sender.number && $rootScope.sender.number.length == 10) {
-            console.log($rootScope.sender);
-            localStorage.setItem('senderDetails', JSON.stringify($rootScope.sender)); 
-      //  } else {
-      //      console.log('invalid field');
-            
-      //  }
-       
+
+        console.log($rootScope.sender);
+        localStorage.setItem('senderDetails', JSON.stringify($rootScope.sender));
+
     }
     $scope.disableNumberAdd = false;
-    $rootScope.sender = {};
+    $rootScope.sender = {}; 
     $scope.reciever = {};
     $scope.addNumber = function() {
         console.log($scope.reciever.number)
@@ -188,4 +166,5 @@ angular.module('starter.controller', []).controller('SmsCtrl', ['$scope', '$q', 
         }
         localStorage.setItem('recieverNumbers', JSON.stringify($rootScope.recieverNumbers));
     }
-}])
+}
+])
