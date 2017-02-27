@@ -1,0 +1,20 @@
+<ion-view>
+    <ion-content ng-controller="inputCtrl">
+     
+    
+      <div id="inputEnterDiv">
+      <h3>Register</h3> 
+        <div class="list">
+            <label class="item item-input">
+                <span class="input-label">Name</span>
+                <input type="text" ng-model="msgSender.name">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Number</span>
+                <input type="tel" ng-model="msgSender.number">
+            </label>
+        </div>
+        <button class="button button-block" ng-click="saveUser()">Save</button>
+      </div>
+    </ion-content>
+</ion-view>

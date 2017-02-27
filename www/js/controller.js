@@ -1,4 +1,5 @@
 angular.module('starter.controller', []).controller('SmsCtrl', ['$scope', '$q', '$cordovaSms', '$state', '$rootScope', function($scope, $q, $cordovaSms, $state, $rootScope) {
+  
     function getPosition() {
         console.log('entered get position...');
         var deferred = $q.defer();
@@ -33,12 +34,13 @@ angular.module('starter.controller', []).controller('SmsCtrl', ['$scope', '$q', 
                     //user go to configuration
                 }
             }, "Please Turn on GPS", //title
-            ["Cancel", "Go"]);
+            ["Cancel", "Enable"]);
             //buttons
         });
     }
+    
     $scope.sendSMS = function() {
-
+          $rootScope.ShowToast("message sent to ");
         console.log($rootScope.recieverNumbers);
         console.log('entered');
 
@@ -57,7 +59,7 @@ angular.module('starter.controller', []).controller('SmsCtrl', ['$scope', '$q', 
     }
 
     function send() {
-        if (!(angular.equals({}, $rootScope.sender))) {
+        if (!(angular.equals({}, $rootScope.sender)) && $rootScope.sender.name != "" && $rootScope.sender.number != "") {
             console.log('entered inside...');
             document.addEventListener("deviceready", function() {
                 var promise = getPosition();
@@ -79,16 +81,20 @@ angular.module('starter.controller', []).controller('SmsCtrl', ['$scope', '$q', 
                         count = count + 1;
                         $cordovaSms.send(num, textBody, options).then(function() {
                             console.log('Success');
+                            $rootScope.ShowToast("message sent to " +num );
+                            console.log(count);
+                            console.log(num);
+                              
+                            if (count == 1) {
+                                console.log('message sent successfully...');
+                                alert('message sent successfully...');
+                            }
 
                         }, function(error) {
                             console.log('Error');
-
+                            $rootScope.ShowToast("message sending failed to " +num );  
                         });
-                        if (count == totalNum) {
-                            console.log('message sent successfully...');
-                            alert('message sent successfully...');
-
-                        }
+                        console.log('entered message sending loop...');
                     })
                 }, function(res) {
                     console.log(res);
@@ -121,7 +127,10 @@ angular.module('starter.controller', []).controller('SmsCtrl', ['$scope', '$q', 
         console.log(sender);
         if (sender == '' || sender == null) {
             localStorage.setItem('senderDetails', '');
-            $rootScope.sender = {};
+            $rootScope.sender = {
+                name: "",
+                number: ""
+            };
         } else {
             $rootScope.sender = JSON.parse(sender);
         }
@@ -133,13 +142,14 @@ angular.module('starter.controller', []).controller('SmsCtrl', ['$scope', '$q', 
     ;
 
     $scope.saveSender = function() {
-
         console.log($rootScope.sender);
         localStorage.setItem('senderDetails', JSON.stringify($rootScope.sender));
-
     }
     $scope.disableNumberAdd = false;
-    $rootScope.sender = {}; 
+    $rootScope.sender = {
+        name: "",
+        number: ""
+    };
     $scope.reciever = {};
     $scope.addNumber = function() {
         console.log($scope.reciever.number)

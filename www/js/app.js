@@ -16,6 +16,20 @@ angular.module('starter', ['ionic', 'starter.controller', 'ngCordova']).run(func
         if (window.StatusBar) {
             StatusBar.styleDefault();
         }
+
+        $rootScope.ShowToast = function(message) {
+        if (window.cordova) {
+
+                $cordovaToast.showLongCenter(message).then(function(success) {
+                    // success
+                    console.log("Toast Success");
+                }, function(error) {
+                    // error
+                    console.log("Toast Failed");
+                });
+            }
+        
+    }
         // localStorage.setItem('recieverNumbers', '');
         //localStorage.setItem('senderDetails', '');
         $rootScope.recieverNumbers = [];
@@ -32,7 +46,7 @@ angular.module('starter', ['ionic', 'starter.controller', 'ngCordova']).run(func
         console.log(sender);
         if (sender == '' || sender == null) {
             localStorage.setItem('senderDetails', '');
-            $rootScope.sender = {};
+            $rootScope.sender = {name:"", number:""};
         } else {
             $rootScope.sender = JSON.parse(sender);
         }

@@ -1,6 +1,6 @@
 <ion-view ng-controller="settingsCtrl">
-    <ion-header-bar class="sub-head bar-dark">
-        <button style="color: white;" ng-click="goBack()" class="button">Back</button>
+    <ion-header-bar class="sub-head bar-assertive">
+        <button style="color: white;" ng-click="goBack()" class="button button-clear"><i class="icon ion-arrow-left-c"></i></button>
     </ion-header-bar>
     <ion-content>
         <div class="list">
@@ -16,7 +16,7 @@
   <!--      <span ng-show="showSenderErrorMsg" style="color:red;">Invalid name or number</span>  -->
         <button class="button button-block" ng-click="saveSender()">Save</button>
       <hr/> 
-      <h4>Enter Numbers to send SMS</h4>
+      <h4 style="text-align:center;">Enter upto 10 Reciever Numbers</h4>
         <div class="list">
             <div class="item item-input-inset">
                 <label class="item-input-wrapper">
