@@ -1,0 +1,9 @@
+#inputEnterDiv {
+    width:90%;
+    margin:auto;
+    position:relative;
+    top:8vh;
+}
+#inputEnterDiv h3 {
+    text-align:center;
+}

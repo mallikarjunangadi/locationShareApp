@@ -2,7 +2,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('starter', ['ionic', 'starter.controller', 'ngCordova']).run(function($ionicPlatform, $rootScope) {
+angular.module('starter', ['ionic', 'starter.controller', 'ngCordova']).run(function($ionicPlatform, $rootScope, $cordovaToast) {
     $ionicPlatform.ready(function() {
         if (window.cordova && window.cordova.plugins.Keyboard) {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -20,7 +20,7 @@ angular.module('starter', ['ionic', 'starter.controller', 'ngCordova']).run(func
         $rootScope.ShowToast = function(message) {
         if (window.cordova) {
 
-                $cordovaToast.showLongCenter(message).then(function(success) {
+                $cordovaToast.showLongBottom(message).then(function(success) {
                     // success
                     console.log("Toast Success");
                 }, function(error) {

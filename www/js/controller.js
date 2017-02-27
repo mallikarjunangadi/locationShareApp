@@ -1,5 +1,31 @@
 angular.module('starter.controller', []).controller('SmsCtrl', ['$scope', '$q', '$cordovaSms', '$state', '$rootScope', function($scope, $q, $cordovaSms, $state, $rootScope) {
-  
+    var sender = localStorage.getItem('senderDetails');
+    console.log(sender);
+    if (sender === null) {
+        console.log('new user');
+        $scope.showRegister = true;
+        $scope.showSosButton = false;
+        $scope.showHeaderBar = false;
+    } else {
+        console.log('old user... already logged in');
+        $scope.showRegister = false;
+        $scope.showSosButton = true;
+        $scope.showHeaderBar = true;
+    }
+    $scope.msgSender = {
+        name: "",
+        number: ""
+    }
+    $scope.saveUser = function() {
+        if ($scope.msgSender.name != "" && $scope.msgSender.number != "") {
+            $rootScope.sender = $scope.msgSender;
+            localStorage.setItem('senderDetails', JSON.stringify($rootScope.sender));
+            $scope.showRegister = false;
+            $scope.showSosButton = true;
+            $scope.showHeaderBar = true;
+        }
+    }
+    console.log('homeCtrl');
     function getPosition() {
         console.log('entered get position...');
         var deferred = $q.defer();
@@ -18,7 +44,6 @@ angular.module('starter.controller', []).controller('SmsCtrl', ['$scope', '$q', 
         });
         return deferred.promise;
     }
-
     function calldialog() {
         document.addEventListener("deviceready", function() {
             cordova.dialogGPS("Your GPS is Disabled, this app needs to be enable to works.", //message
@@ -38,12 +63,10 @@ angular.module('starter.controller', []).controller('SmsCtrl', ['$scope', '$q', 
             //buttons
         });
     }
-    
     $scope.sendSMS = function() {
-          $rootScope.ShowToast("message sent to ");
+        //  $rootScope.ShowToast("message sent to ");
         console.log($rootScope.recieverNumbers);
         console.log('entered');
-
         cordova.plugins.diagnostic.isLocationAvailable(function(available) {
             console.log("Location is " + (available ? "available" : "not available"));
             if (!available) {
@@ -55,9 +78,7 @@ angular.module('starter.controller', []).controller('SmsCtrl', ['$scope', '$q', 
         }, function(error) {
             console.error("The following error occurred: " + error);
         });
-
     }
-
     function send() {
         if (!(angular.equals({}, $rootScope.sender)) && $rootScope.sender.name != "" && $rootScope.sender.number != "") {
             console.log('entered inside...');
@@ -70,29 +91,16 @@ angular.module('starter.controller', []).controller('SmsCtrl', ['$scope', '$q', 
                             intent: ''
                         }
                     };
-
                     var textBody = "Emergency, SOS from Dr." + $rootScope.sender.name + " (" + $rootScope.sender.number + ")  longitude: " + $scope.long + ", Lattitude: " + $scope.lat + " " + "\n https://www.google.co.in/maps/@" + $scope.lat + "," + $scope.long + ",15z?hl=en";
-                    var successNums = "";
-                    var unSuccessNums = "";
                     var totalNum = $rootScope.recieverNumbers.length;
-                    var count = 0;
-
                     $rootScope.recieverNumbers.forEach(function(num) {
-                        count = count + 1;
                         $cordovaSms.send(num, textBody, options).then(function() {
                             console.log('Success');
-                            $rootScope.ShowToast("message sent to " +num );
-                            console.log(count);
+                            $rootScope.ShowToast("message sent to " + num);
                             console.log(num);
-                              
-                            if (count == 1) {
-                                console.log('message sent successfully...');
-                                alert('message sent successfully...');
-                            }
-
                         }, function(error) {
                             console.log('Error');
-                            $rootScope.ShowToast("message sending failed to " +num );  
+                            $rootScope.ShowToast("message sending failed to " + num);
                         });
                         console.log('entered message sending loop...');
                     })
@@ -101,10 +109,9 @@ angular.module('starter.controller', []).controller('SmsCtrl', ['$scope', '$q', 
                 })
             }, false);
         } else {
-            alert('Please register your name and number in settings');
+            $rootScope.ShowToast('Please register your name and number in settings');
         }
     }
-
     $scope.settingsPage = function() {
         console.log('settings function')
         $state.go('settings');
@@ -121,7 +128,7 @@ angular.module('starter.controller', []).controller('SmsCtrl', ['$scope', '$q', 
         }
         if ($rootScope.recieverNumbers.length == 10) {
             $scope.disableNumberAdd = true;
-        }
+        } 
         console.log($rootScope.recieverNumbers);
         var sender = localStorage.getItem('senderDetails');
         console.log(sender);
@@ -140,7 +147,6 @@ angular.module('starter.controller', []).controller('SmsCtrl', ['$scope', '$q', 
         $ionicHistory.goBack();
     }
     ;
-
     $scope.saveSender = function() {
         console.log($rootScope.sender);
         localStorage.setItem('senderDetails', JSON.stringify($rootScope.sender));
