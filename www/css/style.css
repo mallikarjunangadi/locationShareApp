@@ -2,8 +2,34 @@
     width:90%;
     margin:auto;
     position:relative;
-    top:8vh;
+    top:3vh;
 }
-#inputEnterDiv h3 {
+#inputEnterDiv h4 {
     text-align:center;
 }
+
+.col.col-center {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row; 
+    flex-direction: row;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+}
+
+.button-circle {
+    width: 13vmin;
+    height: 13vmin;
+    color: white;
+    border-radius: 50%;
+    background-color: transparent;
+    border: .8vmin solid rgba(255, 255, 255, .5);
+    -webkit-transition: all 0.2s ease-in;
+    transition: all 0.2s ease-in;
+}
+.element {
+    text-align:center;
+}
+

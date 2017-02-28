@@ -1,7 +1,7 @@
 angular.module('starter.controller', []).controller('SmsCtrl', ['$scope', '$q', '$cordovaSms', '$state', '$rootScope', function($scope, $q, $cordovaSms, $state, $rootScope) {
     var sender = localStorage.getItem('senderDetails');
     console.log(sender);
-    if (sender === null) {
+    if (sender === null || sender === "") {
         console.log('new user');
         $scope.showRegister = true;
         $scope.showSosButton = false;
@@ -17,7 +17,7 @@ angular.module('starter.controller', []).controller('SmsCtrl', ['$scope', '$q', 
         number: ""
     }
     $scope.saveUser = function() {
-        if ($scope.msgSender.name != "" && $scope.msgSender.number != "") {
+        if ($scope.msgSender.name != "" && $scope.msgSender.number != "" && $scope.msgSender.number.length == 10 && $rootScope.recieverNumbers.length != 0) {
             $rootScope.sender = $scope.msgSender;
             localStorage.setItem('senderDetails', JSON.stringify($rootScope.sender));
             $scope.showRegister = false;
@@ -36,7 +36,8 @@ angular.module('starter.controller', []).controller('SmsCtrl', ['$scope', '$q', 
             deferred.resolve('success');
         }, function(error) {
             deferred.reject('failure');
-            alert('Unable to get location: ' + error.message);
+            console.log('Unable to get location: ' + error.message);
+            $rootScope.ShowToast('Unable to get location: ' + error.message);
         }, {
             enableHighAccuracy: true,
             maximumAge: Infinity,
@@ -68,6 +69,7 @@ angular.module('starter.controller', []).controller('SmsCtrl', ['$scope', '$q', 
         console.log($rootScope.recieverNumbers);
         console.log('entered');
         cordova.plugins.diagnostic.isLocationAvailable(function(available) {
+            console.log(available);
             console.log("Location is " + (available ? "available" : "not available"));
             if (!available) {
                 calldialog();
@@ -126,9 +128,6 @@ angular.module('starter.controller', []).controller('SmsCtrl', ['$scope', '$q', 
         } else {
             $rootScope.recieverNumbers = JSON.parse(numbers);
         }
-        if ($rootScope.recieverNumbers.length == 10) {
-            $scope.disableNumberAdd = true;
-        } 
         console.log($rootScope.recieverNumbers);
         var sender = localStorage.getItem('senderDetails');
         console.log(sender);
@@ -147,40 +146,31 @@ angular.module('starter.controller', []).controller('SmsCtrl', ['$scope', '$q', 
         $ionicHistory.goBack();
     }
     ;
+
     $scope.saveSender = function() {
         console.log($rootScope.sender);
         localStorage.setItem('senderDetails', JSON.stringify($rootScope.sender));
     }
-    $scope.disableNumberAdd = false;
-    $rootScope.sender = {
-        name: "",
-        number: ""
-    };
-    $scope.reciever = {};
-    $scope.addNumber = function() {
-        console.log($scope.reciever.number)
-        if ((angular.isDefined($scope.reciever.number)) && (($scope.reciever.number).toString().length) == 10) {
-            if ($rootScope.recieverNumbers.length < 10) {
-                if (($rootScope.recieverNumbers.indexOf($scope.reciever.number)) == -1) {
-                    $rootScope.recieverNumbers.push($scope.reciever.number);
-                }
-                if ($rootScope.recieverNumbers.length == 10) {
-                    $scope.disableNumberAdd = true;
-                }
-            } else {
-                $scope.disableNumberAdd = true;
-            }
-            localStorage.setItem('recieverNumbers', JSON.stringify($rootScope.recieverNumbers));
-            $scope.reciever = {};
-            console.log($rootScope.recieverNumbers);
-        }
-    }
-    $scope.deleteNumber = function(index) {
-        $rootScope.recieverNumbers.splice(index, 1);
-        if ($rootScope.recieverNumbers.length < 10) {
-            $scope.disableNumberAdd = false;
-        }
-        localStorage.setItem('recieverNumbers', JSON.stringify($rootScope.recieverNumbers));
-    }
 }
 ])
+.controller('hometabCtrl', function($scope, $rootScope, $state) {
+
+    $rootScope.devWidth = ((window.innerWidth > 0) ? window.innerWidth : screen.width);
+    console.log($rootScope.devWidth);
+    $rootScope.menuWidth = 0.90 * $rootScope.devWidth;
+    console.log("In Menu Ctrl");
+    $scope.rightItems = [];
+
+    jQuery.getJSON('json/MenuItems.json', function(data) {
+
+        $scope.rightItems = data.MenuItems;
+        console.log($scope.rightItems);
+
+    });
+
+    $scope.itemclick = function(obj) {
+        console.log("OnClick");
+        $state.go(obj.state);
+    }
+
+})

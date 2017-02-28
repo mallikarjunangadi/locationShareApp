@@ -1,0 +1,39 @@
+<ion-view title="Home" ng-controller="hometabCtrl">
+   
+        <ion-pane class="background-grey">
+            <ion-content scroll=true has-bouncing="false" style=" background-image : url('img/redTexture2.jpg');background-size: cover;">
+                <div style="position:relative;top:5vmin">
+                    <div>
+                        <div ng-repeat="items in rightItems">
+                            <div class="row" ng-if="$index%3==0">
+                                <div style="position:relative;" class="col col-33 col-center">
+                                    <a class="element" ng-if="rightItems[$index]!=undefined" ng-click="itemclick(rightItems[$index])">
+                                        <button style="box-shadow:2px 2px 4px rgba(0, 0, 0, 0.4);" class="button-circle" animate-ratio="fadeIn">
+                                            <img src="img/book.jpg" width=40 height=40 style="font-size:7vmin;border-radius:50%;"></img>
+                                        </button>
+                                        <div style="text-shadow:3px 3px 4px rgba(0, 0, 0, 0.8);color:white;" class="icon_text">{{rightItems[$index].name}} </div>
+                                    </a>
+                                </div>
+                                <div style="position:relative;" class="col col-30 col-center">
+                                    <a class="element" ng-if="rightItems[$index+1]!=undefined" ng-click="itemclick(rightItems[$index+1])">
+                                        <button style="box-shadow:2px 2px 4px rgba(0, 0, 0, 0.4);" class="button-circle" animate-ratio="fadeIn">
+                                            <i class="{{rightItems[$index+1].icon}}" style="font-size:7vmin"></i>
+                                        </button>
+                                        <div style="text-shadow:3px 3px 4px rgba(0, 0, 0, 0.8);color:white;" class="icon_text">{{rightItems[$index+1].name}} </div>
+                                    </a>
+                                </div>
+                                <div style="position:relative;" class="col col-30 col-center">
+                                    <a class="element" ng-if="rightItems[$index+2]!=undefined" ng-click="itemclick(rightItems[$index+2])">
+                                        <button style="box-shadow:2px 2px 4px rgba(0, 0, 0, 0.4);" class="button-circle" animate-ratio="fadeIn">
+                                            <i class="{{rightItems[$index+2].icon}}" style="font-size:7vmin"></i>
+                                        </button>
+                                        <div style="text-shadow:3px 3px 4px rgba(0, 0, 0, 0.8);color:white;" class="icon_text">{{rightItems[$index+2].name}} </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ion-content>
+        </ion-pane>
+</ion-view>

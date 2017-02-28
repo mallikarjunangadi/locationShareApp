@@ -1,6 +1,8 @@
 <ion-view ng-controller="settingsCtrl">
     <ion-header-bar class="sub-head bar-assertive">
-        <button style="color: white;" ng-click="goBack()" class="button button-clear"><i class="icon ion-arrow-left-c"></i></button>
+        <button style="color: white;" ng-click="goBack()" class="button button-clear">
+            <i class="icon ion-arrow-left-c"></i>
+        </button>
     </ion-header-bar>
     <ion-content>
         <div class="list">
@@ -13,21 +15,26 @@
                 <input type="tel" ng-model="sender.number" placeholder="Enter Your Number"></input>
             </label>
         </div>
-  <!--      <span ng-show="showSenderErrorMsg" style="color:red;">Invalid name or number</span>  -->
+        <!--      <span ng-show="showSenderErrorMsg" style="color:red;">Invalid name or number</span>  -->
         <button class="button button-block" ng-click="saveSender()">Save</button>
-      <hr/> 
-      <h4 style="text-align:center;">Enter upto 10 Reciever Numbers</h4>
+        <hr/>
+        <h4 style="text-align:center;">Enter upto 10 Reciever Numbers</h4>
         <div class="list">
             <div class="item item-input-inset">
                 <label class="item-input-wrapper">
-                    <input type="tel" ng-model="reciever.number" placeholder="Enter 10 Reciever Numbers"></input>
+                    <input type="tel" ng-model="reciever.number" placeholder="Enter 10 digit Numbers"></input>
                 </label>
-                <button class="button button-small" ng-click="addNumber()" ng-disabled="disableNumberAdd">Add</button>
+                <button class="button button-small" ng-click="pickContact()" ng-disabled="disableNumberAdd">
+                    <i class="icon ion-person-add"></i>
+                </button>
+                <button class="button button-small" ng-click="addNumber(reciever.number)" ng-disabled="disableNumberAdd">Add</button>
             </div>
-            <ion-list>
-             <ion-item ng-repeat="number in recieverNumbers track by number">
-              <span>{{number}}<span> <span style="right:1vh;color:red;position:absolute;" ng-click="deleteNumber($index)">X</span>
-             </ion-item>
-            </ion-list>
+        </div>
+        <ion-list>
+            <ion-item ng-repeat="number in recieverNumbers track by number">
+                <span>{{number}}</span>
+                <span style="right:1vh;color:red;position:absolute;" ng-click="deleteNumber($index)">&times</span>
+            </ion-item>
+        </ion-list>
     </ion-content>
 </ion-view>
