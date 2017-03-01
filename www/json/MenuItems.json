@@ -3,48 +3,48 @@
 "MenuItems" : [
 {
 "name": "Apparels",
-"icon": "ion-ios-home-outline",
+"icon": "ion-tshirt-outline",
 "state": "app.hometab"
 },
 
 {
 "name": "Books",
-"icon": "ion-ios-printer-outline",
+"icon": "ion-ios-book-outline",
 "state": ""
 },
 {
 "name": "Jobs",
-"icon": "ion-cash",
+"icon": "ion-university",
 "state": ""
 },
 {
 "name": "Journals",
-"icon": "ion-ios-compose-outline",
+"icon": "ion-compose",
 "state": ""
 },
 {
 "name": "News feeds",
-"icon": "ion-ios-compose-outline",
+"icon": "ion-social-rss",
 "state": ""
 },
 {
 "name": "Security services",
-"icon": "ion-ios-compose-outline",
+"icon": "ion-locked",
 "state": ""
 },
 {
 "name": "legal services",
-"icon": "ion-ios-compose-outline",
+"icon": "ion-android-done",
 "state": ""
 },
 {
 "name": "surgical equipments",
-"icon": "ion-ios-compose-outline",
+"icon": "ion-scissors",
 "state": ""
 },
 {
 "name": "Others",
-"icon": "ion-ios-compose-outline",
+"icon": "ion-android-more-horizontal",
 "state": ""
 }
 

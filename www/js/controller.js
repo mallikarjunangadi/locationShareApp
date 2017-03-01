@@ -1,31 +1,6 @@
 angular.module('starter.controller', []).controller('SmsCtrl', ['$scope', '$q', '$cordovaSms', '$state', '$rootScope', function($scope, $q, $cordovaSms, $state, $rootScope) {
-    var sender = localStorage.getItem('senderDetails');
-    console.log(sender);
-    if (sender === null || sender === "") {
-        console.log('new user');
-        $scope.showRegister = true;
-        $scope.showSosButton = false;
-        $scope.showHeaderBar = false;
-    } else {
-        console.log('old user... already logged in');
-        $scope.showRegister = false;
-        $scope.showSosButton = true;
-        $scope.showHeaderBar = true;
-    }
-    $scope.msgSender = {
-        name: "",
-        number: ""
-    }
-    $scope.saveUser = function() {
-        if ($scope.msgSender.name != "" && $scope.msgSender.number != "" && $scope.msgSender.number.length == 10 && $rootScope.recieverNumbers.length != 0) {
-            $rootScope.sender = $scope.msgSender;
-            localStorage.setItem('senderDetails', JSON.stringify($rootScope.sender));
-            $scope.showRegister = false;
-            $scope.showSosButton = true;
-            $scope.showHeaderBar = true;
-        }
-    }
-    console.log('homeCtrl');
+
+    console.log('smsCtrl');
     function getPosition() {
         console.log('entered get position...');
         var deferred = $q.defer();
@@ -152,13 +127,22 @@ angular.module('starter.controller', []).controller('SmsCtrl', ['$scope', '$q', 
         localStorage.setItem('senderDetails', JSON.stringify($rootScope.sender));
     }
 }
-])
-.controller('hometabCtrl', function($scope, $rootScope, $state) {
+]).controller('hometabCtrl', function($scope, $rootScope, $state) {
+    //-------for displaying login page------------------
+    var sender = localStorage.getItem('senderDetails');
+    console.log(sender);
+    if (sender === null || sender === "") {
+        console.log('new user');
+        $state.go('login');
+    } else {
+        console.log('old user... already logged in');
+    }
+    //----------------------------------------------------
 
     $rootScope.devWidth = ((window.innerWidth > 0) ? window.innerWidth : screen.width);
     console.log($rootScope.devWidth);
     $rootScope.menuWidth = 0.90 * $rootScope.devWidth;
-    console.log("In Menu Ctrl");
+    console.log("In homeCtrl");
     $scope.rightItems = [];
 
     jQuery.getJSON('json/MenuItems.json', function(data) {
@@ -171,6 +155,18 @@ angular.module('starter.controller', []).controller('SmsCtrl', ['$scope', '$q', 
     $scope.itemclick = function(obj) {
         console.log("OnClick");
         $state.go(obj.state);
-    }
+    } 
 
+}).controller('loginCtrl', function($scope, $state, $rootScope) {
+    $scope.msgSender = {
+        name: "",
+        number: ""
+    }
+    $scope.saveUser = function() {
+        if ($scope.msgSender.name != "" && $scope.msgSender.number != "" && $scope.msgSender.number.length == 10 && $rootScope.recieverNumbers.length != 0) {
+            $rootScope.sender = $scope.msgSender;
+            localStorage.setItem('senderDetails', JSON.stringify($rootScope.sender));
+            $state.go('tabs');
+        }
+    }
 })

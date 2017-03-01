@@ -17,8 +17,13 @@ angular.module('starter', ['ionic', 'starter.controller', 'starter.global', 'ngC
             StatusBar.styleDefault();
         }
     });
-}).config(function($stateProvider, $urlRouterProvider) {
-    $stateProvider.state('settings', {
+}).config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+    $ionicConfigProvider.tabs.position('bottom');
+    $stateProvider.state('login', {
+        url: '/login',
+        templateUrl: 'templates/login.html'
+    })
+    .state('settings', {
         url: '/settings',
         templateUrl: 'templates/settings.html'
     }).state('tabs', {
@@ -36,6 +41,22 @@ angular.module('starter', ['ionic', 'starter.controller', 'starter.global', 'ngC
         views: {
             'home-tab': {
                 templateUrl: 'templates/hometab.html'
+            }
+        }
+
+    }).state('tabs.moretab', {
+        url: '/moretab',
+        views: {
+            'more-tab': {
+                templateUrl: 'templates/moretab.html'
+            }
+        }
+
+    }).state('tabs.profiletab', {
+        url: '/profiletab',
+        views: {
+            'profile-tab': {
+                templateUrl: 'templates/profiletab.html'
             }
         }
 
