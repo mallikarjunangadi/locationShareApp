@@ -2,7 +2,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('starter', ['ionic', 'starter.controller', 'starter.global', 'ngCordova']).run(function($ionicPlatform) {
+angular.module('starter', ['ionic', 'starter.controller', 'starter.global', 'ngCordova', 'ion-floating-menu']).run(function($ionicPlatform) {
     $ionicPlatform.ready(function() {
         if (window.cordova && window.cordova.plugins.Keyboard) {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -60,6 +60,55 @@ angular.module('starter', ['ionic', 'starter.controller', 'starter.global', 'ngC
             }
         }
 
+    }).state('apparels', {
+        url: '/apparels',
+        templateUrl: 'templates/apparels.html'
+    }).state('apparelView', {
+        url: '/apparelView',
+        templateUrl: 'templates/apparelView.html'
+    }).state('books', {
+        url: '/books',
+        templateUrl: 'templates/books.html'
+    }).state('bookView', {
+        url: '/bookView',
+        templateUrl: 'templates/bookView.html'
+    }).state('jobs', {
+        url: '/jobs',
+        templateUrl: 'templates/job.html'
+    }).state('jobView', {
+        url: '/jobView',
+        templateUrl: 'templates/jobView.html'
+    }).state('journals', {
+        url: '/journals',
+        templateUrl: 'templates/journals.html'
+    }).state('journalsView', {
+        url: '/journalsView',
+        templateUrl: 'templates/journalView.html'
+    }).state('newsfeed', {
+        url: '/newsfeed',
+        templateUrl: 'templates/newsfeed.html'
+    }).state('newsfeedView', {
+        url: '/newsfeedView',
+        templateUrl: 'templates/newsfeedView.html'
+    }).state('security', {
+        url: '/security',
+        templateUrl: 'templates/security.html'
+    }).state('securityView', {
+        url: '/securityView',
+        templateUrl: 'templates/securityView.html'
+    }).state('legal', {
+        url: '/legal',
+        templateUrl: 'templates/legal.html'
+    }).state('legalView', {
+        url: '/legalView',
+        templateUrl: 'templates/legalView.html'
+    }).state('surgical', {
+        url: '/surgical',
+        templateUrl: 'templates/surgical.html'
+    }).state('surgicalView', {
+        url: '/surgicalView',
+        templateUrl: 'templates/surgicalView.html'
     })
+    
     $urlRouterProvider.otherwise('/tabs');
 })

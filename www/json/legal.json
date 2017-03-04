@@ -1,0 +1,36 @@
+{
+
+"legal" : [
+{ 
+"name": "legal 1",
+"img": "img/legal.png",
+"description":"This is legal description. This is legal description. This is legal description. This is legal description. This is legal description."
+},
+{ 
+"name": "legal 2",
+"img": "img/legal.png",
+"description":"This is legal description. This is legal description. This is legal description. This is legal description. This is legal description."
+},
+{ 
+"name": "legal 3",
+"img": "img/legal.png",
+"description":"This is legal description. This is legal description. This is legal description. This is legal description. This is legal description."
+},
+{ 
+"name": "legal 4",
+"img": "img/legal.png",
+"description":"This is legal description. This is legal description. This is legal description. This is legal description. This is legal description."
+},
+{ 
+"name": "legal 5",
+"img": "img/legal.png",
+"description":"This is legal description. This is legal description. This is legal description. This is legal description. This is legal description."
+},
+{ 
+"name": "legal 6",
+"img": "img/legal.png",
+"description":"This is legal description. This is legal description. This is legal description. This is legal description. This is legal description."
+}
+
+]
+}

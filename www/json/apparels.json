@@ -1,0 +1,37 @@
+{
+
+"apparels" : [
+{
+"name": "Apparel1",
+"img": "img/apparals.png",
+"description":"This is apparels description. This is apparels description This is apparels description This is apparels description This is apparels description This is apparels description This is apparels description"
+},
+
+{
+"name": "Apparel2",
+"img": "img/apparelShirt.jpg",
+"description":"This is apparels description. This is apparels description This is apparels description This is apparels description This is apparels description This is apparels description This is apparels description"
+},
+{
+"name": "Apparel3",
+"img": "img/appareltshirt.jpg",
+"description":"This is apparels description. This is apparels description This is apparels description This is apparels description This is apparels description This is apparels description This is apparels description"
+},
+{
+"name": "Apparel4",
+"img": "img/apparelShirt.jpg",
+"description":"This is apparels description. This is apparels description This is apparels description This is apparels description This is apparels description This is apparels description This is apparels description"
+},
+{
+"name": "Apparel5",
+"img": "img/apparals.png",
+"description":"This is apparels description. This is apparels description This is apparels description This is apparels description This is apparels description This is apparels description This is apparels description"
+},
+{
+"name": "Apparel6",
+"img": "img/appareltshirt.jpg",
+"description":"This is apparels description. This is apparels description This is apparels description This is apparels description This is apparels description This is apparels description This is apparels description"
+}
+
+]
+}

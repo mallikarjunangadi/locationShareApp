@@ -1,0 +1,16 @@
+<ion-view ng-controller="journalsCtrl">
+    <ion-header-bar class="sub-head bar-assertive">
+        <button style="color: white;" ng-click="goBackHome()" class="button button-clear">
+            <i class="icon ion-arrow-left-c"></i>
+        </button>
+    </ion-header-bar>
+    <ion-content>
+        <ion-list>
+            <ion-item class="item-avatar" ng-repeat="journal in journalsItems" ng-click="journalsDetails(journal)">
+                <img src={{journal.img}}></img>
+                <h3>{{journal.name}}</h3>
+                <p>{{journal.description}}</p>    
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>

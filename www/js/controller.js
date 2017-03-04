@@ -116,11 +116,6 @@ angular.module('starter.controller', []).controller('SmsCtrl', ['$scope', '$q', 
             $rootScope.sender = JSON.parse(sender);
         }
     })
-    $scope.goBack = function() {
-        console.log('entered back')
-        $ionicHistory.goBack();
-    }
-    ;
 
     $scope.saveSender = function() {
         console.log($rootScope.sender);
@@ -153,9 +148,9 @@ angular.module('starter.controller', []).controller('SmsCtrl', ['$scope', '$q', 
     });
 
     $scope.itemclick = function(obj) {
-        console.log("OnClick");
+        console.log("home menu button Click");
         $state.go(obj.state);
-    } 
+    }
 
 }).controller('loginCtrl', function($scope, $state, $rootScope) {
     $scope.msgSender = {
@@ -168,5 +163,125 @@ angular.module('starter.controller', []).controller('SmsCtrl', ['$scope', '$q', 
             localStorage.setItem('senderDetails', JSON.stringify($rootScope.sender));
             $state.go('tabs');
         }
+    }
+})
+.controller('apparelsCtrl', function($scope, $rootScope, $state) {
+    $scope.apparelsItems = [];
+    jQuery.getJSON('json/apparels.json', function(data) {
+        $scope.apparelsItems = data.apparels;
+        console.log($scope.apparelsItems);
+    });
+
+    $scope.apparelDetails = function(obj) {
+        $rootScope.selectedApparel = obj;
+        $state.go('apparelView');
+    }
+})
+
+.controller('profileCtrl', function($scope){
+    $scope.profileObj = {};
+    jQuery.getJSON('json/profile.json', function(data) {
+        $scope.profileObj = data;
+        console.log($scope.profileObj);
+    });
+
+    $scope.editProfile = function() {
+        console.log('edit profile entered')
+    }
+})
+.controller('booksCtrl', function($scope, $rootScope, $state){
+    $scope.booksItems = [];
+    jQuery.getJSON('json/books.json', function(data) {
+        $scope.booksItems = data.books;
+        console.log($scope.booksItems);
+    });
+
+    $scope.booksDetails = function(obj) {
+        $rootScope.selectedbook = obj;
+        $state.go('bookView');
+    }
+})
+.controller('jobsCtrl', function($scope, $rootScope, $state){
+    console.log('entered job ctrl');
+    $scope.jobsItems = [];
+    jQuery.getJSON('json/myjobs.json', function(data) {
+        console.log(data);
+        $scope.jobsItems = data.jobs;
+        console.log($scope.jobsItems);
+    });
+
+    $scope.jobDetails = function(obj) {
+        $rootScope.selectedjob = obj;
+        $state.go('jobView');
+    }
+})
+.controller('journalsCtrl', function($scope, $rootScope, $state){
+    console.log('entered journals ctrl');
+    $scope.journalsItems = [];
+    jQuery.getJSON('json/journals.json', function(data) {
+        console.log(data);
+        $scope.journalsItems = data.journals;
+        console.log($scope.journalsItems);
+    });
+
+    $scope.journalsDetails = function(obj) {
+        $rootScope.selectedjournal = obj;
+        $state.go('journalsView');
+    }
+})
+.controller('newsfeedCtrl', function($scope, $rootScope, $state){
+    console.log('entered journals ctrl');
+    $scope.newsfeedItems = [];
+    jQuery.getJSON('json/newsfeed.json', function(data) {
+        console.log(data);
+        $scope.newsfeedItems = data.news;
+        console.log($scope.newsfeedItems);
+    });
+
+    $scope.newsfeedDetails = function(obj) {
+        $rootScope.selectednews = obj;
+        $state.go('newsfeedView');
+    }
+})
+.controller('securityCtrl', function($scope, $rootScope, $state){
+    console.log('entered security ctrl');
+    $scope.securityItems = [];
+    jQuery.getJSON('json/security.json', function(data) {
+        console.log(data);
+        $scope.securityItems = data.security;
+        console.log($scope.securityItems);
+    });
+
+    $scope.securityDetails = function(obj) {
+        $rootScope.selectedsecurity = obj;
+        $state.go('securityView');
+    }
+})
+.controller('legalCtrl', function($scope, $rootScope, $state){
+    console.log('entered legal ctrl');
+    $scope.legalItems = [];
+    jQuery.getJSON('json/legal.json', function(data) {
+        console.log(data);
+        $scope.legalItems = data.legal;
+        console.log($scope.legalItems);
+    });
+
+    $scope.legalDetails = function(obj) {
+        $rootScope.selectedlegal = obj;
+        $state.go('legalView');
+    }
+})
+.controller('surgicalCtrl', function($scope, $rootScope, $state){
+    console.log('entered surgical ctrl');
+    $scope.surgicalItems = [];
+    jQuery.getJSON('json/surgical.json', function(data) {
+        console.log(data);
+        $scope.surgicalItems = data.surgical;
+        console.log($scope.surgicalItems);
+    });
+
+    $scope.surgicalDetails = function(obj) {
+        $rootScope.selectedsurgical = obj;
+        $state.go('surgicalView');
     }
 })

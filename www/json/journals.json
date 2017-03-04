@@ -1,0 +1,42 @@
+{
+
+"journals" : [
+{ 
+"name": "journal1",
+"img": "img/journal.jpg",
+"description":"This is journal description. This is journal description This is journal description. This is journal description This is journal description. This is journal description "
+},
+{ 
+"name": "journal2",
+"img": "img/journal.jpg",
+"description":"This is journal description. This is journal description This is journal description. This is journal description This is journal description. This is journal description "
+},
+{ 
+"name": "journal3",
+"img": "img/journal.jpg",
+"description":"This is journal description. This is journal description This is journal description. This is journal description This is journal description. This is journal description "
+},
+{ 
+"name": "journal4",
+"img": "img/journal.jpg",
+"description":"This is journal description. This is journal description This is journal description. This is journal description This is journal description. This is journal description "
+},
+{ 
+"name": "journal5",
+"img": "img/journal.jpg",
+"description":"This is journal description. This is journal description This is journal description. This is journal description This is journal description. This is journal description "
+},
+{ 
+"name": "journal6",
+"img": "img/journal.jpg",
+"description":"This is journal description. This is journal description This is journal description. This is journal description This is journal description. This is journal description "
+},
+{ 
+"name": "journal7",
+"img": "img/journal.jpg",
+"description":"This is journal description. This is journal description This is journal description. This is journal description This is journal description. This is journal description "
+}
+
+
+]
+}

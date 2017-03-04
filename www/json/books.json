@@ -1,0 +1,37 @@
+{
+
+"books" : [
+{
+"name": "Book1",
+"img": "img/book.jpg",
+"description":"This is book description. This is book description This is book description This is book description This is book description This is book description This is book description"
+},
+
+{
+"name": "Book2",
+"img": "img/books.jpg",
+"description":"This is book description. This is book description This is book description This is book description This is book description This is book description This is book description"
+},
+{
+"name": "Book3",
+"img": "img/book.jpg",
+"description":"This is book description. This is book description This is book description This is book description This is book description This is book description This is book description"
+},
+{
+"name": "Book4",
+"img": "img/books.jpg",
+"description":"This is book description. This is book description This is book description This is book description This is book description This is book description This is book description"
+},
+{
+"name": "Book5",
+"img": "img/book.jpg",
+"description":"This is book description. This is book description This is book description This is book description This is book description This is book description This is book description"
+},
+{
+"name": "Book6",
+"img": "img/books.jpg",
+"description":"This is book description. This is book description This is book description This is book description This is book description This is book description This is book description"
+}
+
+]
+}

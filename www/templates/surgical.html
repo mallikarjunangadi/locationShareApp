@@ -1,0 +1,16 @@
+<ion-view ng-controller="surgicalCtrl">
+    <ion-header-bar class="sub-head bar-assertive">
+        <button style="color: white;" ng-click="goBackHome()" class="button button-clear">
+            <i class="icon ion-arrow-left-c"></i>
+        </button>
+    </ion-header-bar>
+    <ion-content>
+        <ion-list>
+            <ion-item class="item-avatar" ng-repeat="surgical in surgicalItems" ng-click="surgicalDetails(surgical)">
+                <img src={{surgical.img}}></img>
+                <h3>{{surgical.name}}</h3>
+                <p>{{surgical.description}}</p>    
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>

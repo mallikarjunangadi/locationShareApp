@@ -4,48 +4,48 @@
 {
 "name": "Apparels",
 "icon": "ion-tshirt-outline",
-"state": "app.hometab"
+"state": "apparels"
 },
 
 {
 "name": "Books",
 "icon": "ion-ios-book-outline",
-"state": ""
+"state": "books"
 },
 {
 "name": "Jobs",
 "icon": "ion-university",
-"state": ""
+"state": "jobs"
 },
 {
 "name": "Journals",
 "icon": "ion-compose",
-"state": ""
+"state": "journals"
 },
 {
 "name": "News feeds",
 "icon": "ion-social-rss",
-"state": ""
+"state": "newsfeed"
 },
 {
 "name": "Security services",
 "icon": "ion-locked",
-"state": ""
+"state": "security"
 },
 {
 "name": "legal services",
 "icon": "ion-android-done",
-"state": ""
+"state": "legal"
 },
 {
 "name": "surgical equipments",
 "icon": "ion-scissors",
-"state": ""
+"state": "surgical"
 },
 {
 "name": "Others",
 "icon": "ion-android-more-horizontal",
-"state": ""
+"state": "tabs"
 }
 
 ]

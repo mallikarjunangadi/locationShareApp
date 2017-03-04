@@ -1,4 +1,4 @@
-angular.module('starter.global', []).controller('globalCtrl', function($rootScope) {
+angular.module('starter.global', []).controller('globalCtrl', function($rootScope, $ionicHistory, $state) {
 
     $rootScope.ShowToast = function(message) {
         if (window.cordova) {
@@ -78,7 +78,7 @@ angular.module('starter.global', []).controller('globalCtrl', function($rootScop
                 var selCont = contact.phoneNumbers[0].value.toString();
                 console.log(selCont);
                 selCont = selCont.replace("+91", "").replace(/-/g, "").replace(/ /g, "");
-                $scope.$apply(function() {
+                $rootScope.$apply(function() {
                     $rootScope.reciever.number = selCont;
                 })
             }
@@ -86,4 +86,13 @@ angular.module('starter.global', []).controller('globalCtrl', function($rootScop
             console.log('Error: ' + err);
         });
     }
+
+    $rootScope.goBack = function() {
+        console.log('entered back')
+        $ionicHistory.goBack();
+    };
+    $rootScope.goBackHome = function() {
+        console.log('entered back')
+        $state.go('tabs');
+    };
 })

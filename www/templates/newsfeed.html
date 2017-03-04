@@ -1,0 +1,16 @@
+<ion-view ng-controller="newsfeedCtrl">
+    <ion-header-bar class="sub-head bar-assertive">
+        <button style="color: white;" ng-click="goBackHome()" class="button button-clear">
+            <i class="icon ion-arrow-left-c"></i>
+        </button>
+    </ion-header-bar>
+    <ion-content>
+        <ion-list>
+            <ion-item class="item-avatar" ng-repeat="news in newsfeedItems" ng-click="newsfeedDetails(news)">
+                <img src={{news.img}}></img>
+                <h3>{{news.name}}</h3>
+                <p>{{news.description}}</p>    
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>

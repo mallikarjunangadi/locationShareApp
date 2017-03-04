@@ -1,0 +1,16 @@
+<ion-view ng-controller="booksCtrl">
+    <ion-header-bar class="sub-head bar-assertive">
+        <button style="color: white;" ng-click="goBackHome()" class="button button-clear">
+            <i class="icon ion-arrow-left-c"></i>
+        </button>
+    </ion-header-bar>
+    <ion-content>
+        <ion-list>
+            <ion-item class="item-avatar" ng-repeat="book in booksItems" ng-click="booksDetails(book)">
+                <img src={{book.img}}></img>
+                <h3>{{book.name}}</h3>
+                <p>{{book.description}}</p>    
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>

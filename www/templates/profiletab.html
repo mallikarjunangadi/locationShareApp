@@ -1,5 +1,25 @@
-<ion-view>
- <ion-content>
-  <h3>Profile tab</h3>
- </ion-content>
+<ion-view ng-controller="profileCtrl">
+<ion-floating-button click="editProfile()" has-footer="true" button-color="	#800000" icon="ion-edit" icon-color="#fff">
+</ion-floating-button>
+    <ion-content>
+        <ion-list>
+            <ion-item style="background:url('img/redTexture.jpg') no-repeat fixed;background-size:100%;height:23vh;">
+                <img src={{profileObj.img}} style="border-radius:50%;width:60px;height:60px;">
+                <h3 style="color:white;">{{profileObj.name}}</h3>
+                <p style="color:white;">{{profileObj.email}}</p>
+            </ion-item>
+            <ion-item>
+                <h3>Number</h3>
+                <p>{{profileObj.number}}</p>
+            </ion-item>
+            <ion-item>
+                <h3>DOB</h3>
+                <p>{{profileObj.dob}}</p>
+            </ion-item>
+            <ion-item>
+                <h3>Gender</h3>
+                <p>{{profileObj.gender}}</p>
+            </ion-item>
+        </ion-list>
+    </ion-content>
 </ion-view>

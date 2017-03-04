@@ -1,0 +1,40 @@
+{
+
+"news" : [
+{ 
+"name": "news1",
+"img": "img/newsfeed.png",
+"description":"This is news description. This is news description. This is news description. This is news description. This is news description. This is news description."
+},
+{ 
+"name": "news2",
+"img": "img/newsfeed.png",
+"description":"This is news description. This is news description. This is news description. This is news description. This is news description. This is news description."
+},
+{ 
+"name": "news3",
+"img": "img/newsfeed.png",
+"description":"This is news description. This is news description. This is news description. This is news description. This is news description. This is news description."
+},
+{ 
+"name": "news4",
+"img": "img/newsfeed.png",
+"description":"This is news description. This is news description. This is news description. This is news description. This is news description. This is news description."
+},
+{ 
+"name": "news5",
+"img": "img/newsfeed.png",
+"description":"This is news description. This is news description. This is news description. This is news description. This is news description. This is news description."
+},
+{ 
+"name": "news6",
+"img": "img/newsfeed.png",
+"description":"This is news description. This is news description. This is news description. This is news description. This is news description. This is news description."
+}
+
+
+
+
+
+]
+}

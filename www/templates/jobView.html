@@ -1,0 +1,16 @@
+<ion-view>
+    <ion-header-bar class="sub-head bar-assertive">
+        <button style="color: white;" ng-click="goBack()" class="button button-clear">
+            <i class="icon ion-arrow-left-c"></i>
+        </button>
+    </ion-header-bar>
+    <ion-content>
+        <ion-list>
+            <ion-item style="height:180px;background:url({{selectedjob.img}}) no-repeat fixed;background-size: 100%;"></ion-item>
+            <ion-item class="item-borderless wrap item-text-wrap" style="word-wrap: break-word; word-break: break-all;">
+              <h1>{{selectedjob.name}}</h1>
+              <p>{{selectedjob.description}}</p>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>
