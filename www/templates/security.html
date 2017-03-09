@@ -7,10 +7,10 @@
     <ion-content>
         <ion-list>
             <ion-item class="item-avatar" ng-repeat="security in securityItems" ng-click="securityDetails(security)">
-                <img src={{security.img}}></img>
-                <h3>{{security.name}}</h3>
-                <p>{{security.description}}</p>    
+                <img src={{security.pimageData}}></img>
+                <h3>{{security.pname}}</h3>
+                <p>{{security.pdescription}}</p>    
             </ion-item>
-        </ion-list>
+        </ion-list>    
     </ion-content>
 </ion-view>

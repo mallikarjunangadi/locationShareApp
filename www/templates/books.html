@@ -5,12 +5,15 @@
         </button>
     </ion-header-bar>
     <ion-content>
+     
         <ion-list>
             <ion-item class="item-avatar" ng-repeat="book in booksItems" ng-click="booksDetails(book)">
-                <img src={{book.img}}></img>
-                <h3>{{book.name}}</h3>
-                <p>{{book.description}}</p>    
+                <img src={{book.pimageData}}></img>
+                <h3>{{book.pname}}</h3>
+                <p>{{book.pdescription}}</p>    
             </ion-item>
         </ion-list>
+      
+
     </ion-content>
 </ion-view>

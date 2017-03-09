@@ -7,10 +7,10 @@
     <ion-content>
         <ion-list>
             <ion-item class="item-avatar" ng-repeat="surgical in surgicalItems" ng-click="surgicalDetails(surgical)">
-                <img src={{surgical.img}}></img>
-                <h3>{{surgical.name}}</h3>
-                <p>{{surgical.description}}</p>    
+                <img src={{surgical.pimageData}}></img>
+                <h3>{{surgical.pname}}</h3>
+                <p>{{surgical.pdescription}}</p>    
             </ion-item>
-        </ion-list>
+        </ion-list>  
     </ion-content>
 </ion-view>

@@ -18,8 +18,10 @@
         <!--      <span ng-show="showSenderErrorMsg" style="color:red;">Invalid name or number</span>  -->
         <button class="button button-block" ng-click="saveSender()">Save</button>
         <hr/>
-        <h4 style="text-align:center;">Enter upto 10 Reciever Numbers</h4>
-        <div class="list">
+        
+        <h4 style="text-align:center;">Enter upto 10 Emergency Contact Numbers</h4>
+        
+        <div class="list" style="margin-bottom:0px;">
             <div class="item item-input-inset">
                 <label class="item-input-wrapper">
                     <input type="tel" ng-model="reciever.number" placeholder="Enter 10 digit Numbers"></input>
@@ -33,7 +35,7 @@
         <ion-list>
             <ion-item ng-repeat="number in recieverNumbers track by number">
                 <span>{{number}}</span>
-                <span style="right:1vh;color:red;position:absolute;" ng-click="deleteNumber($index)">&times</span>
+                <span style="right:1vh;color:red;position:absolute;font-size:5vh;" ng-click="deleteNumber($index)">&times</span>
             </ion-item>
         </ion-list>
     </ion-content>

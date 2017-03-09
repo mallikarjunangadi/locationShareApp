@@ -1,0 +1,16 @@
+{
+	"DocumentHeader": {
+		"DocumentType": "Events",
+		"Author": "Shrey/Gautham",
+		"OrganizationId": "xyz",
+		"Datetime": "23523556",
+		"DocumentId": "20025",
+		"version": "1"
+	},
+	"DocumentBody": {
+		"ApplicationSpecificData": {
+
+
+		}
+	}
+}

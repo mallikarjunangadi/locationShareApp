@@ -7,10 +7,11 @@
     <ion-content>
         <ion-list>
             <ion-item class="item-avatar" ng-repeat="journal in journalsItems" ng-click="journalsDetails(journal)">
-                <img src={{journal.img}}></img>
-                <h3>{{journal.name}}</h3>
-                <p>{{journal.description}}</p>    
+                <img src={{journal.pimageData}}></img>
+                <h3>{{journal.pname}}</h3>
+                <p>{{journal.pdescription}}</p>    
             </ion-item>
         </ion-list>
+  
     </ion-content>
 </ion-view>

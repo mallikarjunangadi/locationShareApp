@@ -7,10 +7,11 @@
     <ion-content>
         <ion-list>
             <ion-item class="item-avatar" ng-repeat="job in jobsItems" ng-click="jobDetails(job)">
-                <img src={{job.img}}></img>
-                <h3>{{job.name}}</h3>
-                <p>{{job.description}}</p>    
+                <img src={{job.pimageData}}></img>
+                <h3>{{job.pname}}</h3>
+                <p>{{job.pdescription}}</p>    
             </ion-item>
-        </ion-list>
+        </ion-list> 
+  
     </ion-content>
 </ion-view>

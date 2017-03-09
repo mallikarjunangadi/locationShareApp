@@ -7,9 +7,9 @@
     <ion-content>
         <ion-list>
             <ion-item class="item-avatar" ng-repeat="news in newsfeedItems" ng-click="newsfeedDetails(news)">
-                <img src={{news.img}}></img>
-                <h3>{{news.name}}</h3>
-                <p>{{news.description}}</p>    
+                <img src={{news.pimageData}}></img>
+                <h3>{{news.pname}}</h3>
+                <p>{{news.pdescription}}</p>    
             </ion-item>
         </ion-list>
     </ion-content>

@@ -1,4 +1,4 @@
-angular.module('starter.global', []).controller('globalCtrl', function($rootScope, $ionicHistory, $state) {
+angular.module('starter.global', []).controller('globalCtrl', function($rootScope, $ionicHistory, $state, $cordovaToast) {
 
     $rootScope.ShowToast = function(message) {
         if (window.cordova) {
@@ -16,6 +16,13 @@ angular.module('starter.global', []).controller('globalCtrl', function($rootScop
     if ($rootScope.recieverNumbers.length == 10) {
         $rootScope.disableNumberAdd = true;
     }
+    
+    var sosProfile = localStorage.getItem('sosProfile');
+    if (sosProfile == '' || sosProfile == null) {
+        localStorage.setItem('sosProfile', '');
+     }
+     console.log(sosProfile);
+     
     var numbers = localStorage.getItem('recieverNumbers');
     if (numbers == '' || numbers == null) {
         localStorage.setItem('recieverNumbers', '');
@@ -23,8 +30,8 @@ angular.module('starter.global', []).controller('globalCtrl', function($rootScop
     } else {
         $rootScope.recieverNumbers = JSON.parse(numbers);
     }
-
     console.log($rootScope.recieverNumbers);
+   
     var sender = localStorage.getItem('senderDetails');
     console.log(sender);
     if (sender == '' || sender == null) {
@@ -36,13 +43,10 @@ angular.module('starter.global', []).controller('globalCtrl', function($rootScop
     } else {
         $rootScope.sender = JSON.parse(sender);
     }
+    console.log($rootScope.sender);
 
     $rootScope.disableNumberAdd = false;
-    $rootScope.sender = {
-        name: "",
-        number: ""
-    };
-
+   
     $rootScope.reciever = {};
     $rootScope.addNumber = function(recieverNum) {
         console.log(recieverNum);

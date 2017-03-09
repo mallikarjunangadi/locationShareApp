@@ -2,7 +2,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('starter', ['ionic', 'starter.controller', 'starter.global', 'ngCordova', 'ion-floating-menu']).run(function($ionicPlatform) {
+angular.module('starter', ['ionic', 'starter.controller', 'starter.global', 'starter.services', 'starter.filter', 'ngCordova', 'ion-floating-menu', 'angularMoment']).run(function($ionicPlatform) {
     $ionicPlatform.ready(function() {
         if (window.cordova && window.cordova.plugins.Keyboard) {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -108,7 +108,28 @@ angular.module('starter', ['ionic', 'starter.controller', 'starter.global', 'ngC
     }).state('surgicalView', {
         url: '/surgicalView',
         templateUrl: 'templates/surgicalView.html'
+    }).state('editProfile', {
+        url: '/editProfile',
+        templateUrl: 'templates/editProfile.html'
     })
     
     $urlRouterProvider.otherwise('/tabs');
+})
+
+ moment.locale('en', {
+  relativeTime: {
+    future: "in %s",
+    past: "%s ago",
+    s: "%d sec",
+    m: "a minute",
+    mm: "%d minutes",
+    h: "an hour",
+    hh: "%d hours",
+    d: "a day",
+    dd: "%d days",
+    M: "a month",
+    MM: "%d months",
+    y: "a year",
+    yy: "%d years"
+  }
 })

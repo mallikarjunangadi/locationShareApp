@@ -1,11 +1,12 @@
-angular.module('starter.controller', []).controller('SmsCtrl', ['$scope', '$q', '$cordovaSms', '$state', '$rootScope', function($scope, $q, $cordovaSms, $state, $rootScope) {
+angular.module('starter.controller', [])
+.controller('SmsCtrl', ['$scope', '$q', '$cordovaSms', '$state', '$rootScope', function($scope, $q, $cordovaSms, $state, $rootScope) {
 
     console.log('smsCtrl');
     function getPosition() {
         console.log('entered get position...');
         var deferred = $q.defer();
         navigator.geolocation.getCurrentPosition(function(pos) {
-            console.log('entered success');
+            console.log('entered geolocation success');
             $scope.lat = pos.coords.latitude,
             $scope.long = pos.coords.longitude
             deferred.resolve('success');
@@ -20,6 +21,8 @@ angular.module('starter.controller', []).controller('SmsCtrl', ['$scope', '$q', 
         });
         return deferred.promise;
     }
+
+    /*   
     function calldialog() {
         document.addEventListener("deviceready", function() {
             cordova.dialogGPS("Your GPS is Disabled, this app needs to be enable to works.", //message
@@ -39,26 +42,15 @@ angular.module('starter.controller', []).controller('SmsCtrl', ['$scope', '$q', 
             //buttons
         });
     }
+  */
+
     $scope.sendSMS = function() {
         //  $rootScope.ShowToast("message sent to ");
         console.log($rootScope.recieverNumbers);
-        console.log('entered');
-        cordova.plugins.diagnostic.isLocationAvailable(function(available) {
-            console.log(available);
-            console.log("Location is " + (available ? "available" : "not available"));
-            if (!available) {
-                calldialog();
-            }
-            if (available) {
-                send();
-            }
-        }, function(error) {
-            console.error("The following error occurred: " + error);
-        });
-    }
-    function send() {
-        if (!(angular.equals({}, $rootScope.sender)) && $rootScope.sender.name != "" && $rootScope.sender.number != "") {
-            console.log('entered inside...');
+        console.log($rootScope.sender);
+
+        if ($rootScope.sender.name != "" && $rootScope.sender.number != "") {
+            console.log('entered inside if condition...');
             document.addEventListener("deviceready", function() {
                 var promise = getPosition();
                 promise.then(function(res) {
@@ -69,8 +61,14 @@ angular.module('starter.controller', []).controller('SmsCtrl', ['$scope', '$q', 
                         }
                     };
                     var textBody = "Emergency, SOS from Dr." + $rootScope.sender.name + " (" + $rootScope.sender.number + ")  longitude: " + $scope.long + ", Lattitude: " + $scope.lat + " " + "\n https://www.google.co.in/maps/@" + $scope.lat + "," + $scope.long + ",15z?hl=en";
-                    var totalNum = $rootScope.recieverNumbers.length;
+                    var count = 0;
                     $rootScope.recieverNumbers.forEach(function(num) {
+                        count++;
+                        if (count == 1) {
+                            console.log('entered message sending loop...');
+                            $rootScope.ShowToast("wait.. message is sending..");
+                        }
+
                         $cordovaSms.send(num, textBody, options).then(function() {
                             console.log('Success');
                             $rootScope.ShowToast("message sent to " + num);
@@ -79,7 +77,7 @@ angular.module('starter.controller', []).controller('SmsCtrl', ['$scope', '$q', 
                             console.log('Error');
                             $rootScope.ShowToast("message sending failed to " + num);
                         });
-                        console.log('entered message sending loop...');
+
                     })
                 }, function(res) {
                     console.log(res);
@@ -89,6 +87,7 @@ angular.module('starter.controller', []).controller('SmsCtrl', ['$scope', '$q', 
             $rootScope.ShowToast('Please register your name and number in settings');
         }
     }
+
     $scope.settingsPage = function() {
         console.log('settings function')
         $state.go('settings');
@@ -164,21 +163,14 @@ angular.module('starter.controller', []).controller('SmsCtrl', ['$scope', '$q', 
             $state.go('tabs');
         }
     }
-})
-.controller('apparelsCtrl', function($scope, $rootScope, $state) {
-    $scope.apparelsItems = [];
-    jQuery.getJSON('json/apparels.json', function(data) {
-        $scope.apparelsItems = data.apparels;
-        console.log($scope.apparelsItems);
+}).controller('profileCtrl', function($scope, $state) {
+    $scope.$on("$ionicView.beforeEnter", function(event, data) {
+        console.log("ProfileTabCtrl before enter ");
+        var sosProfile = localStorage.getItem('sosProfile');
+        $scope.profile = JSON.parse(sosProfile);
+        console.log($scope.profile);
     });
 
-    $scope.apparelDetails = function(obj) {
-        $rootScope.selectedApparel = obj;
-        $state.go('apparelView');
-    }
-})
-
-.controller('profileCtrl', function($scope){
     $scope.profileObj = {};
     jQuery.getJSON('json/profile.json', function(data) {
         $scope.profileObj = data;
@@ -186,99 +178,312 @@ angular.module('starter.controller', []).controller('SmsCtrl', ['$scope', '$q', 
     });
 
     $scope.editProfile = function() {
-        console.log('edit profile entered')
+        console.log('edit profile entered');
+        $state.go('editProfile');
     }
-})
-.controller('booksCtrl', function($scope, $rootScope, $state){
+
+}).controller("editProfileCtrl", function($scope, $state, $rootScope, $ionicPopover, $cordovaCamera, $cordovaFile) {
+    $scope.$on("$ionicView.beforeEnter", function(event, data) {
+        console.log("editProfileCtrl before enter ");
+        var sosProfile = localStorage.getItem('sosProfile');
+        if (sosProfile == '' || sosProfile == null) {
+            localStorage.setItem('sosProfile', '');
+            $scope.profile = {
+                gender: "male",
+                profilePic: "img/profilePic.jpg"
+            };
+        } else {
+            $scope.profile = JSON.parse(sosProfile);
+        }
+        console.log($scope.profile);
+    });
+
+    $scope.updateProfile = function(profile) {
+        console.log(profile);
+        localStorage.setItem('sosProfile', JSON.stringify(profile));
+        /*   if(angular.isDefined(profile.dob)) {
+          profile.dob =  profile.dob.toString().substr(0,10);
+          console.log(profile.dob);
+        }
+     */
+        $state.go('tabs.profiletab');
+    }
+
+    var template = '<ion-popover-view class="profilePicPopover"><ion-header-bar> <h1 class="title">Select Profile Picture</h1> </ion-header-bar> <ion-content><button class="button button-positive" ng-click="openCamera()">Camera</button><button class="button button-positive" ng-click="openGallery()">Gallery</button></ion-content></ion-popover-view>'
+
+    $scope.ProfilePicPopover = $ionicPopover.fromTemplate(template, {
+        scope: $scope
+    });
+
+    $scope.openProfilePicPopover = function($event) {
+        $scope.ProfilePicPopover.show($event);
+    }
+    ;
+
+    //Cleanup the popover when we're done with it!
+    $scope.$on('$destroy', function() {
+       $scope.ProfilePicPopover.remove();
+    });
+
+    $scope.openCamera = function() {
+        $scope.ProfilePicPopover.hide();
+        console.log('camera opened..');
+        document.addEventListener("deviceready", function() {
+            var options = {
+                quality: 50,
+                destinationType: Camera.DestinationType.FILE_URI,
+                sourceType: Camera.PictureSourceType.CAMERA,
+                allowEdit: true,
+                encodingType: Camera.EncodingType.JPEG,
+                targetWidth: 1020,
+                targetHeight: 768,
+                popoverOptions: CameraPopoverOptions,
+                saveToPhotoAlbum: false,
+                correctOrientation: true
+            };
+            $cordovaCamera.getPicture(options).then(function(sourcePath) {
+                var sourceDirectory = sourcePath.substring(0, sourcePath.lastIndexOf('/') + 1);
+                var sourceFileName = sourcePath.substring(sourcePath.lastIndexOf('/') + 1, sourcePath.length);
+                // $scope.cameraFileName = cordova.file.dataDirectory + sourceFileName;
+                console.log("Copying from : " + sourceDirectory + sourceFileName);
+                console.log("Copying to : " + cordova.file.dataDirectory + sourceFileName);
+                $cordovaFile.copyFile(sourceDirectory, sourceFileName, cordova.file.dataDirectory, sourceFileName).then(function(success) {
+                    $scope.cameraFileName = cordova.file.dataDirectory + sourceFileName;
+                    console.log($scope.cameraFileName);
+                    $scope.profile.profilePic = $scope.cameraFileName;
+                }, function(error) {
+                    console.dir(error);
+                });
+            }, function(err) {// error
+            });
+        }, false);
+    }
+    $scope.openGallery = function() {
+        $scope.ProfilePicPopover.hide();
+        console.log('gallery opened..');
+        document.addEventListener("deviceready", function() {
+            var options = {
+                quality: 50,
+                destinationType: Camera.DestinationType.FILE_URI,
+                sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+                allowEdit: true
+            };
+            $cordovaCamera.getPicture(options).then(function(sourcePath) {
+                var sourceDirectory = sourcePath.substring(0, sourcePath.lastIndexOf('/') + 1);
+                var sourceFileName = sourcePath.substring(sourcePath.lastIndexOf('/') + 1, sourcePath.length);
+                var destinationTypeFileName = (new Date()).getTime() + '.jpg';
+                // $scope.cameraFileName = cordova.file.dataDirectory + sourceFileName;
+                console.log("Copying from : " + sourceDirectory + sourceFileName);
+                console.log("Copying to : " + cordova.file.dataDirectory + destinationTypeFileName);
+                console.log(sourceFileName);
+                console.log($scope.galeryFileName);
+                $cordovaFile.copyFile(sourceDirectory, sourceFileName, cordova.file.dataDirectory, destinationTypeFileName).then(function(success) {
+                    $scope.galleryFileName = cordova.file.dataDirectory + destinationTypeFileName;
+                    console.log($scope.galleryFileName);
+                    $scope.profile.profilePic = $scope.galleryFileName;
+                }, function(error) {
+                    console.dir(error);
+                });
+            }, function(err) {
+                console.log(err);
+            });
+        }, false);
+    }
+
+    $scope.goToProfile = function() {
+        console.log('got to profile tab..')
+        $state.go('tabs.profiletab');
+    }
+}).controller('apparelsCtrl', function($scope, $rootScope, $state, serverFactory) {
+    $scope.$on("$ionicView.beforeEnter", function(event, data) {
+       var promise = serverFactory.serverToServer({category:"apparels"}, "http://192.168.0.13:3000/getItems"); 
+       promise.then(function(data) {
+          console.log(data);
+          $scope.apparelsItems = data.Data;
+       }, function() {          
+          console.log('Unable load data');
+       })
+     })
+     
+    $scope.apparelsItems = [];
+ /*   
+    jQuery.getJSON('json/apparels.json', function(data) {
+        $scope.apparelsItems = data.apparels;
+        console.log($scope.apparelsItems);
+    });
+*/
+    $scope.apparelDetails = function(obj) {
+        $rootScope.selectedApparel = obj;
+        $state.go('apparelView');
+    }
+}).controller('booksCtrl', function($scope, $rootScope, $state, serverFactory) {
+      $scope.$on("$ionicView.beforeEnter", function(event, data) {
+       var promise = serverFactory.serverToServer({category:"books"}, "http://192.168.0.13:3000/getItems"); 
+       promise.then(function(data) {
+          console.log(data);
+          $scope.booksItems = data.Data;
+       }, function() {          
+          console.log('Unable load data');
+       })
+     })
+
+     var t = (new Date()).getTime();
+     console.log(t);
+     var d = new Date(t);
+     console.log(d);
+  /*
     $scope.booksItems = [];
     jQuery.getJSON('json/books.json', function(data) {
         $scope.booksItems = data.books;
         console.log($scope.booksItems);
     });
-
+ */
     $scope.booksDetails = function(obj) {
         $rootScope.selectedbook = obj;
         $state.go('bookView');
     }
-})
-.controller('jobsCtrl', function($scope, $rootScope, $state){
+}).controller('jobsCtrl', function($scope, $rootScope, $state, serverFactory) {
+     $scope.$on("$ionicView.beforeEnter", function(event, data) {
+       var promise = serverFactory.serverToServer({category:"jobs"}, "http://192.168.0.13:3000/getItems"); 
+       promise.then(function(data) {
+          console.log(data);
+           $scope.jobsItems = data.Data;
+       }, function() {          
+          console.log('Unable load data');
+       })
+     })
     console.log('entered job ctrl');
     $scope.jobsItems = [];
+ /*   
     jQuery.getJSON('json/myjobs.json', function(data) {
         console.log(data);
         $scope.jobsItems = data.jobs;
         console.log($scope.jobsItems);
     });
-
+ */
     $scope.jobDetails = function(obj) {
         $rootScope.selectedjob = obj;
         $state.go('jobView');
     }
-})
-.controller('journalsCtrl', function($scope, $rootScope, $state){
+}).controller('journalsCtrl', function($scope, $rootScope, $state, serverFactory) {
+    $scope.$on("$ionicView.beforeEnter", function(event, data) {
+       var promise = serverFactory.serverToServer({category:"journals"}, "http://192.168.0.13:3000/getItems"); 
+       promise.then(function(data) {
+          console.log(data);
+           $scope.journalsItems = data.Data;
+       }, function() {          
+          console.log('Unable load data');
+       })
+     })
     console.log('entered journals ctrl');
     $scope.journalsItems = [];
+
+  /*  
     jQuery.getJSON('json/journals.json', function(data) {
         console.log(data);
         $scope.journalsItems = data.journals;
         console.log($scope.journalsItems);
     });
+  */  
 
     $scope.journalsDetails = function(obj) {
         $rootScope.selectedjournal = obj;
         $state.go('journalsView');
     }
-})
-.controller('newsfeedCtrl', function($scope, $rootScope, $state){
+}).controller('newsfeedCtrl', function($scope, $rootScope, $state, serverFactory) {
+    $scope.$on("$ionicView.beforeEnter", function(event, data) {
+       var promise = serverFactory.serverToServer({category:"news"}, "http://192.168.0.13:3000/getItems"); 
+       promise.then(function(data) {
+          console.log(data);
+            $scope.newsfeedItems = data.Data;
+       }, function() {          
+          console.log('Unable load data');
+       })
+     })
     console.log('entered journals ctrl');
     $scope.newsfeedItems = [];
+
+   /* 
     jQuery.getJSON('json/newsfeed.json', function(data) {
         console.log(data);
         $scope.newsfeedItems = data.news;
         console.log($scope.newsfeedItems);
     });
-
+  */
     $scope.newsfeedDetails = function(obj) {
         $rootScope.selectednews = obj;
         $state.go('newsfeedView');
     }
-})
-.controller('securityCtrl', function($scope, $rootScope, $state){
+}).controller('securityCtrl', function($scope, $rootScope, $state, serverFactory) {
+    $scope.$on("$ionicView.beforeEnter", function(event, data) {
+       var promise = serverFactory.serverToServer({category:"security_services"}, "http://192.168.0.13:3000/getItems"); 
+       promise.then(function(data) {
+          console.log(data);
+            $scope.securityItems = data.Data;
+       }, function() {          
+          console.log('Unable load data');
+       })
+     })
     console.log('entered security ctrl');
     $scope.securityItems = [];
+
+  /*  
     jQuery.getJSON('json/security.json', function(data) {
         console.log(data);
         $scope.securityItems = data.security;
         console.log($scope.securityItems);
     });
+   */ 
 
     $scope.securityDetails = function(obj) {
         $rootScope.selectedsecurity = obj;
         $state.go('securityView');
     }
-})
-.controller('legalCtrl', function($scope, $rootScope, $state){
+}).controller('legalCtrl', function($scope, $rootScope, $state, serverFactory) {
+    $scope.$on("$ionicView.beforeEnter", function(event, data) {
+       var promise = serverFactory.serverToServer({category:"legal_services"}, "http://192.168.0.13:3000/getItems"); 
+       promise.then(function(data) {
+          console.log(data);
+            $scope.legalItems = data.Data;
+       }, function() {          
+          console.log('Unable load data');
+       })
+     })
     console.log('entered legal ctrl');
     $scope.legalItems = [];
+
+  /*  
     jQuery.getJSON('json/legal.json', function(data) {
         console.log(data);
         $scope.legalItems = data.legal;
         console.log($scope.legalItems);
     });
-
+ */ 
     $scope.legalDetails = function(obj) {
         $rootScope.selectedlegal = obj;
         $state.go('legalView');
     }
-})
-.controller('surgicalCtrl', function($scope, $rootScope, $state){
+}).controller('surgicalCtrl', function($scope, $rootScope, $state, serverFactory) {
+     $scope.$on("$ionicView.beforeEnter", function(event, data) {
+       var promise = serverFactory.serverToServer({category:"surgical_services"}, "http://192.168.0.13:3000/getItems"); 
+       promise.then(function(data) {
+          console.log(data);
+          $scope.surgicalItems = data.Data;
+       }, function() {          
+          console.log('Unable load data');
+       })
+     })
+
     console.log('entered surgical ctrl');
     $scope.surgicalItems = [];
+
+  /*  
     jQuery.getJSON('json/surgical.json', function(data) {
         console.log(data);
         $scope.surgicalItems = data.surgical;
         console.log($scope.surgicalItems);
     });
+  */
 
     $scope.surgicalDetails = function(obj) {
         $rootScope.selectedsurgical = obj;

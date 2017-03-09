@@ -6,10 +6,15 @@
     </ion-header-bar>
     <ion-content>
         <ion-list>
-            <ion-item style="height:180px;background:url({{selectedsurgical.img}}) no-repeat fixed;background-size: 100%;"></ion-item>
+            <ion-item style="height:180px;background:url({{selectedsurgical.pimageData}}) no-repeat fixed;background-size: 100%;"></ion-item>
             <ion-item class="item-borderless wrap item-text-wrap" style="word-wrap: break-word; word-break: break-all;">
-              <h1>{{selectedsurgical.name}}</h1>
-              <p>{{selectedsurgical.description}}</p>
+              <span><b>Posted:</b></span> <span am-time-ago="selectedsurgical.id / 1000 | amFromUnix"></span>
+              <h1>{{selectedsurgical.pname}}</h1>
+              <p>{{selectedsurgical.pdescription}}</p>
+              </br></br>
+              <p><b>Contact :</b></p>
+              <p>{{selectedsurgical.cname}}</p>
+              <p>{{selectedsurgical.cnumber}}</p>
             </ion-item>
         </ion-list>
     </ion-content>

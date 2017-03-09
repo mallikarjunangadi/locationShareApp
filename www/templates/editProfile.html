@@ -1,0 +1,36 @@
+<ion-view ng-controller="editProfileCtrl">
+    <ion-header-bar class="sub-head bar-assertive">
+        <button style="color: white;" ng-click="goToProfile()" class="button button-clear">
+            <i class="icon ion-arrow-left-c"></i>
+        </button>
+    </ion-header-bar>
+    <ion-content>
+        <ion-list>
+            <ion-item style="padding:0px;min-height:20vh;" ng-click="openProfilePicPopover($event)">              
+                <img src={{profile.profilePic}} style="width:100%;height:auto;"></img> 
+            </ion-item>
+            <ion-item class="item item-input item-stacked-label">
+                <span class="input-label">Full Name</span>
+                <input type="text" ng-model="profile.name" placeholder="Enter your name...">
+            </ion-item>
+            <ion-item class="item item-input item-stacked-label">
+                <span class="input-label">Contact Number</span>
+                <input type="tel" ng-model="profile.number" placeholder="Enter your contact number...">
+            </ion-item>
+            <ion-item class="item item-input item-stacked-label">
+                <span class="input-label">Email</span>
+                <input type="email" ng-model="profile.email" placeholder="Enter your email address...">
+            </ion-item>
+            <ion-item class="item item-input item-stacked-label">
+                <span class="input-label">Date of Birth</span>
+                <input type="date" max="2016-01-01" ng-model="profile.dob">
+                <p>{{profile.dob | date: "yyyy-MM-dd"}}</p>
+            </ion-item>
+            <ion-item class="item item-input">
+                <ion-radio ng-model="profile.gender" ng-value="'male'">Male</ion-radio>
+                <ion-radio ng-model="profile.gender" ng-value="'female'">Female</ion-radio>
+            </ion-item>
+            <button class="button button-block button-balanced" ng-click="updateProfile(profile)">Update</button>
+        </ion-list>
+    </ion-content>
+</ion-view>

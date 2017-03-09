@@ -6,10 +6,15 @@
     </ion-header-bar>
     <ion-content>
         <ion-list>
-            <ion-item style="height:180px;background:url({{selectedlegal.img}}) no-repeat fixed;background-size: 100%;"></ion-item>
+            <ion-item style="height:180px;background:url({{selectedlegal.pimageData}}) no-repeat fixed;background-size: 100%;"></ion-item>
             <ion-item class="item-borderless wrap item-text-wrap" style="word-wrap: break-word; word-break: break-all;">
-              <h1>{{selectedlegal.name}}</h1>
-              <p>{{selectedlegal.description}}</p>
+              <span><b>Posted:</b></span> <span am-time-ago="selectedlegal.id / 1000 | amFromUnix"></span>
+              <h1>{{selectedlegal.pname}}</h1>
+              <p>{{selectedlegal.pdescription}}</p>
+              </br></br>
+              <p><b>Contact :</b></p>
+              <p>{{selectedlegal.cname}}</p>
+              <p>{{selectedlegal.cnumber}}</p>
             </ion-item>
         </ion-list>
     </ion-content>

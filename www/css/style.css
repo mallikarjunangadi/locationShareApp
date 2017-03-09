@@ -33,3 +33,11 @@
     text-align:center;
 }
 
+.profilePicPopover {
+    height:15vh;
+    width:40vh;
+}
+
+.profilePicPopover .button {
+    width:20vh;
+}
