@@ -1,5 +1,5 @@
 // Code White 
- 
+ var azure = require('azure');
  var DocumentDBClient = require('documentdb').DocumentClient;
  var config = require('./config');
  var TaskList = require('./routes/tasklist');

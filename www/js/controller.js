@@ -1,5 +1,4 @@
-angular.module('starter.controller', [])
-.controller('SmsCtrl', ['$scope', '$q', '$cordovaSms', '$state', '$rootScope', function($scope, $q, $cordovaSms, $state, $rootScope) {
+angular.module('starter.controller', []).controller('SmsCtrl', ['$scope', '$q', '$cordovaSms', '$state', '$rootScope', function($scope, $q, $cordovaSms, $state, $rootScope) {
 
     console.log('smsCtrl');
     function getPosition() {
@@ -171,11 +170,13 @@ angular.module('starter.controller', [])
         console.log($scope.profile);
     });
 
+    /*
     $scope.profileObj = {};
     jQuery.getJSON('json/profile.json', function(data) {
         $scope.profileObj = data;
-        console.log($scope.profileObj);
+        console.log($scope.profileObj);    
     });
+  */
 
     $scope.editProfile = function() {
         console.log('edit profile entered');
@@ -222,7 +223,7 @@ angular.module('starter.controller', [])
 
     //Cleanup the popover when we're done with it!
     $scope.$on('$destroy', function() {
-       $scope.ProfilePicPopover.remove();
+        $scope.ProfilePicPopover.remove();
     });
 
     $scope.openCamera = function() {
@@ -296,65 +297,84 @@ angular.module('starter.controller', [])
     }
 }).controller('apparelsCtrl', function($scope, $rootScope, $state, serverFactory) {
     $scope.$on("$ionicView.beforeEnter", function(event, data) {
-       var promise = serverFactory.serverToServer({category:"apparels"}, "http://192.168.0.13:3000/getItems"); 
-       promise.then(function(data) {
-          console.log(data);
-          $scope.apparelsItems = data.Data;
-       }, function() {          
-          console.log('Unable load data');
-       })
-     })
-     
+        $rootScope.showDbLoading();
+        var promise = serverFactory.serverToServer({
+            category: "apparels"
+        //}, "http://192.168.0.13:3000/getItems");
+           }, "http://codewhiteapp.azurewebsites.net/getItems");
+        promise.then(function(data) {
+            console.log(data);
+            $rootScope.hideDbLoading();
+            $scope.apparelsItems = data.Data;
+        }, function() {
+            console.log('Unable to load data');
+            $rootScope.hideDbLoading();
+        })
+    })
+
     $scope.apparelsItems = [];
- /*   
+    /*   
     jQuery.getJSON('json/apparels.json', function(data) {
         $scope.apparelsItems = data.apparels;
         console.log($scope.apparelsItems);
     });
-*/
+ */
     $scope.apparelDetails = function(obj) {
         $rootScope.selectedApparel = obj;
         $state.go('apparelView');
     }
 }).controller('booksCtrl', function($scope, $rootScope, $state, serverFactory) {
-      $scope.$on("$ionicView.beforeEnter", function(event, data) {
-       var promise = serverFactory.serverToServer({category:"books"}, "http://192.168.0.13:3000/getItems"); 
-       promise.then(function(data) {
-          console.log(data);
-          $scope.booksItems = data.Data;
-       }, function() {          
-          console.log('Unable load data');
-       })
-     })
+    $scope.$on("$ionicView.beforeEnter", function(event, data) {
+        $rootScope.showDbLoading();
+        var promise = serverFactory.serverToServer({
+            category: "books"
+        //}, "http://192.168.0.13:3000/getItems");
+        }, "http://codewhiteapp.azurewebsites.net/getItems");
+        promise.then(function(data) {
+            console.log(data);
+            $rootScope.hideDbLoading();
+            $scope.booksItems = data.Data;
+        }, function() {
+            $rootScope.hideDbLoading();
+            console.log('Unable load data');
+        })
+    })
 
-     var t = (new Date()).getTime();
-     console.log(t);
-     var d = new Date(t);
-     console.log(d);
-  /*
+    var t = (new Date()).getTime();
+    console.log(t);
+    var d = new Date(t);
+    console.log(d);
+
+    /*
     $scope.booksItems = [];
     jQuery.getJSON('json/books.json', function(data) {
         $scope.booksItems = data.books;
         console.log($scope.booksItems);
     });
- */
+  */
     $scope.booksDetails = function(obj) {
         $rootScope.selectedbook = obj;
         $state.go('bookView');
     }
 }).controller('jobsCtrl', function($scope, $rootScope, $state, serverFactory) {
-     $scope.$on("$ionicView.beforeEnter", function(event, data) {
-       var promise = serverFactory.serverToServer({category:"jobs"}, "http://192.168.0.13:3000/getItems"); 
-       promise.then(function(data) {
-          console.log(data);
-           $scope.jobsItems = data.Data;
-       }, function() {          
-          console.log('Unable load data');
-       })
-     })
+    $scope.$on("$ionicView.beforeEnter", function(event, data) {
+        $rootScope.showDbLoading();
+        var promise = serverFactory.serverToServer({
+            category: "jobs"
+       // }, "http://192.168.0.13:3000/getItems");
+         }, "http://codewhiteapp.azurewebsites.net/getItems");
+        promise.then(function(data) {
+            console.log(data);
+            $rootScope.hideDbLoading();
+            $scope.jobsItems = data.Data;
+        }, function() {
+            $rootScope.hideDbLoading();
+            console.log('Unable load data');
+        })
+    })
     console.log('entered job ctrl');
     $scope.jobsItems = [];
- /*   
+    /*   
     jQuery.getJSON('json/myjobs.json', function(data) {
         console.log(data);
         $scope.jobsItems = data.jobs;
@@ -367,24 +387,30 @@ angular.module('starter.controller', [])
     }
 }).controller('journalsCtrl', function($scope, $rootScope, $state, serverFactory) {
     $scope.$on("$ionicView.beforeEnter", function(event, data) {
-       var promise = serverFactory.serverToServer({category:"journals"}, "http://192.168.0.13:3000/getItems"); 
-       promise.then(function(data) {
-          console.log(data);
-           $scope.journalsItems = data.Data;
-       }, function() {          
-          console.log('Unable load data');
-       })
-     })
+        $rootScope.showDbLoading();
+        var promise = serverFactory.serverToServer({
+            category: "journals"
+       // }, "http://192.168.0.13:3000/getItems");
+         }, "http://codewhiteapp.azurewebsites.net/getItems");
+        promise.then(function(data) {
+            console.log(data);
+            $rootScope.hideDbLoading();
+            $scope.journalsItems = data.Data;
+        }, function() {
+            $rootScope.hideDbLoading();
+            console.log('Unable load data');
+        })
+    })
     console.log('entered journals ctrl');
     $scope.journalsItems = [];
 
-  /*  
+    /*  
     jQuery.getJSON('json/journals.json', function(data) {
         console.log(data);
         $scope.journalsItems = data.journals;
         console.log($scope.journalsItems);
     });
-  */  
+  */
 
     $scope.journalsDetails = function(obj) {
         $rootScope.selectedjournal = obj;
@@ -392,18 +418,24 @@ angular.module('starter.controller', [])
     }
 }).controller('newsfeedCtrl', function($scope, $rootScope, $state, serverFactory) {
     $scope.$on("$ionicView.beforeEnter", function(event, data) {
-       var promise = serverFactory.serverToServer({category:"news"}, "http://192.168.0.13:3000/getItems"); 
-       promise.then(function(data) {
-          console.log(data);
+        $rootScope.showDbLoading();
+        var promise = serverFactory.serverToServer({
+            category: "news"
+      //  }, "http://192.168.0.13:3000/getItems");
+         }, "http://codewhiteapp.azurewebsites.net/getItems");
+        promise.then(function(data) {
+            console.log(data);
+            $rootScope.hideDbLoading();
             $scope.newsfeedItems = data.Data;
-       }, function() {          
-          console.log('Unable load data');
-       })
-     })
+        }, function() {
+            $rootScope.hideDbLoading();
+            console.log('Unable load data');
+        })
+    })
     console.log('entered journals ctrl');
     $scope.newsfeedItems = [];
 
-   /* 
+    /* 
     jQuery.getJSON('json/newsfeed.json', function(data) {
         console.log(data);
         $scope.newsfeedItems = data.news;
@@ -416,24 +448,31 @@ angular.module('starter.controller', [])
     }
 }).controller('securityCtrl', function($scope, $rootScope, $state, serverFactory) {
     $scope.$on("$ionicView.beforeEnter", function(event, data) {
-       var promise = serverFactory.serverToServer({category:"security_services"}, "http://192.168.0.13:3000/getItems"); 
-       promise.then(function(data) {
-          console.log(data);
+        $rootScope.showDbLoading();
+        var promise = serverFactory.serverToServer({
+            category: "security_services"
+        //}, "http://192.168.0.13:3000/getItems");
+         }, "http://codewhiteapp.azurewebsites.net/getItems");
+
+        promise.then(function(data) {
+            console.log(data);
+            $rootScope.hideDbLoading();
             $scope.securityItems = data.Data;
-       }, function() {          
-          console.log('Unable load data');
-       })
-     })
+        }, function() {
+            $rootScope.hideDbLoading();
+            console.log('Unable load data');
+        })
+    })
     console.log('entered security ctrl');
     $scope.securityItems = [];
 
-  /*  
+    /*  
     jQuery.getJSON('json/security.json', function(data) {
         console.log(data);
         $scope.securityItems = data.security;
         console.log($scope.securityItems);
     });
-   */ 
+   */
 
     $scope.securityDetails = function(obj) {
         $rootScope.selectedsecurity = obj;
@@ -441,43 +480,55 @@ angular.module('starter.controller', [])
     }
 }).controller('legalCtrl', function($scope, $rootScope, $state, serverFactory) {
     $scope.$on("$ionicView.beforeEnter", function(event, data) {
-       var promise = serverFactory.serverToServer({category:"legal_services"}, "http://192.168.0.13:3000/getItems"); 
-       promise.then(function(data) {
-          console.log(data);
+        $rootScope.showDbLoading();
+        var promise = serverFactory.serverToServer({
+            category: "legal_services"
+        //}, "http://192.168.0.13:3000/getItems");
+         }, "http://codewhiteapp.azurewebsites.net/getItems");
+        promise.then(function(data) {
+            console.log(data);
+            $rootScope.hideDbLoading();
             $scope.legalItems = data.Data;
-       }, function() {          
-          console.log('Unable load data');
-       })
-     })
+        }, function() {
+            $rootScope.hideDbLoading();
+            console.log('Unable load data');
+        })
+    })
     console.log('entered legal ctrl');
     $scope.legalItems = [];
 
-  /*  
+    /*  
     jQuery.getJSON('json/legal.json', function(data) {
         console.log(data);
         $scope.legalItems = data.legal;
         console.log($scope.legalItems);
     });
- */ 
+ */
     $scope.legalDetails = function(obj) {
         $rootScope.selectedlegal = obj;
         $state.go('legalView');
     }
 }).controller('surgicalCtrl', function($scope, $rootScope, $state, serverFactory) {
-     $scope.$on("$ionicView.beforeEnter", function(event, data) {
-       var promise = serverFactory.serverToServer({category:"surgical_services"}, "http://192.168.0.13:3000/getItems"); 
-       promise.then(function(data) {
-          console.log(data);
-          $scope.surgicalItems = data.Data;
-       }, function() {          
-          console.log('Unable load data');
-       })
-     })
+    $scope.$on("$ionicView.beforeEnter", function(event, data) {
+        $rootScope.showDbLoading();
+        var promise = serverFactory.serverToServer({
+            category: "surgical_services"
+       // }, "http://192.168.0.13:3000/getItems");
+         }, "http://codewhiteapp.azurewebsites.net/getItems");
+        promise.then(function(data) {
+            console.log(data);
+            $rootScope.hideDbLoading();
+            $scope.surgicalItems = data.Data;
+        }, function() {
+            $rootScope.hideDbLoading();
+            console.log('Unable load data');
+        })
+    })
 
     console.log('entered surgical ctrl');
     $scope.surgicalItems = [];
 
-  /*  
+    /*  
     jQuery.getJSON('json/surgical.json', function(data) {
         console.log(data);
         $scope.surgicalItems = data.surgical;

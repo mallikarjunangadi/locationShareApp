@@ -22,5 +22,13 @@
     "ionic-plugin-keyboard",
     "cordova-plugin-device"
   ],
-  "cordovaPlatforms": []
+  "cordovaPlatforms": [],
+  "cordovaPlugins": [
+    {
+      "variables": {
+        "SENDER_ID": "155576419540"
+      },
+      "locator": "phonegap-plugin-push"
+    }
+  ]
 }

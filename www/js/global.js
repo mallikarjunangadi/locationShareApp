@@ -1,4 +1,4 @@
-angular.module('starter.global', []).controller('globalCtrl', function($rootScope, $ionicHistory, $state, $cordovaToast) {
+angular.module('starter.global', []).controller('globalCtrl', function($rootScope, $ionicHistory, $state, $cordovaToast, $ionicLoading) {
 
     $rootScope.ShowToast = function(message) {
         if (window.cordova) {
@@ -9,20 +9,20 @@ angular.module('starter.global', []).controller('globalCtrl', function($rootScop
             });
         }
     }
-
+   
     // localStorage.setItem('recieverNumbers', '');
     //localStorage.setItem('senderDetails', '');
     $rootScope.recieverNumbers = [];
     if ($rootScope.recieverNumbers.length == 10) {
         $rootScope.disableNumberAdd = true;
     }
-    
+
     var sosProfile = localStorage.getItem('sosProfile');
     if (sosProfile == '' || sosProfile == null) {
         localStorage.setItem('sosProfile', '');
-     }
-     console.log(sosProfile);
-     
+    }
+    console.log(sosProfile);
+
     var numbers = localStorage.getItem('recieverNumbers');
     if (numbers == '' || numbers == null) {
         localStorage.setItem('recieverNumbers', '');
@@ -31,7 +31,7 @@ angular.module('starter.global', []).controller('globalCtrl', function($rootScop
         $rootScope.recieverNumbers = JSON.parse(numbers);
     }
     console.log($rootScope.recieverNumbers);
-   
+
     var sender = localStorage.getItem('senderDetails');
     console.log(sender);
     if (sender == '' || sender == null) {
@@ -46,7 +46,7 @@ angular.module('starter.global', []).controller('globalCtrl', function($rootScop
     console.log($rootScope.sender);
 
     $rootScope.disableNumberAdd = false;
-   
+
     $rootScope.reciever = {};
     $rootScope.addNumber = function(recieverNum) {
         console.log(recieverNum);
@@ -94,9 +94,131 @@ angular.module('starter.global', []).controller('globalCtrl', function($rootScop
     $rootScope.goBack = function() {
         console.log('entered back')
         $ionicHistory.goBack();
-    };
+    }
+    ;
     $rootScope.goBackHome = function() {
         console.log('entered back')
         $state.go('tabs');
-    };
+    }
+    ;
+
+    $rootScope.showDbLoading = function() {
+        $ionicLoading.show({
+            template: 'Loading...', 
+            duration: 6000
+        }).then(function() {
+            console.log("The loading indicator is now displayed");
+        });
+    }
+    ;
+    $rootScope.hideDbLoading = function() {
+        $ionicLoading.hide().then(function() {
+            console.log("The loading indicator is now hidden");
+        });
+    }
+    ;
+
+    $rootScope.mobileServiceClient = new WindowsAzure.MobileServiceClient('http://codewhiteapp.azurewebsites.net','AAAAJDkTxNQ:APA91bG5-OJmavDwBwJr3miKwgsgrsfKLehmKdO3-UfyUSW9KJjQfy_Y2ZHKTfP9KU3qTbpH4zuC8F_jvaklSHRP8mm6aIqml4WxOQpOHo7RcAPMwBf5UA1_Pwp6j0ZZWJZ1CTTHavh3');
+     $rootScope.AvailableChannels = null;
+     $rootScope.InitPush = function() {
+        // will execute when device is ready, or immediately if the device is already ready.
+        console.log("platfromctrl2 ionic.platform.ready function");
+        //gcmapp will deprecated from here 
+        // gcmapp.Initialize();
+        
+        pushNotification = PushNotification.init({
+            "android": {
+                "senderID": "155576419540"
+            },
+            "ios": {
+                "alert": "true",
+                "badge": "false",
+                "sound": "true"
+            },
+            "browser": {
+                "pushServiceURL": 'https://push.ionic.io/api/v1/push'
+            },
+            'windows': {}
+        });
+        console.log(pushNotification);
+        pushNotification.on('notification', function(data) {
+            // Display the alert message in an alert.
+            console.log(data);
+            $rootScope.ShowToast(data.message);
+            console.log(data.additionalData.docID);
+         /*   
+            var doc2req = {};
+            doc2req.docID = data.additionalData.docID;
+            var req = {
+                method: 'POST',
+                url: "http://chungling.azurewebsites.net/VidGetPostM/",
+                data: jQuery.param(doc2req),
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            }
+            console.log(req.data);
+            //  var defer = $q.defer();
+            //  $ionicLoading.show({
+            //   template: 'Loading...'
+            //});
+            $http(req).success(function(data, status, headers, config) {
+                // alter data if needed
+                console.log(data.fetchedNews);
+                $rootScope.SaveNewsFeed(data.fetchedNews);
+                //gau
+            }).error(function(data, status, headers, config) {
+                console.log(data);
+                //  defer.reject();
+            });
+         */   
+            //
+            // pull the data from here
+            // Reload the items list.
+            // app.Storage.getData();
+        
+        });
+
+
+        pushNotification.on('registration', function(data) {
+            console.log("registering push notification");
+            console.log($rootScope.mobileServiceClient);
+            console.log(data);
+            //https://edum.azure-mobile.net/
+            // Get the native platform of the device.
+            var platform = device.platform;
+            // Get the handle returned during registration.
+            var handle = data.registrationId;
+            console.log("push registration id is", data.registrationId);
+            // Set the device-specific message template.
+            if (platform == 'android' || platform == 'Android') {
+                // Template registration.
+                var template = "{ \"data\" : {\"title\":\"$(title)\",\"message\":\"$(message)\",\"image\":\"$(image)\",\"channels\":\"$(channels)\",\"docID\":\"$(docID)\",\"additionalData\":\"$(additionalData)\"}}"
+                //  var template = '{ "data" : {"message":"$(message)"}}';
+                // Register for notifications.
+                 
+               // $rootScope.mobileServiceClient.push.register(handle, 'myTemplate', template, $rootScope.AvailableChannels).done(registrationSuccess, registrationFailure);
+                $rootScope.mobileServiceClient.push.gcm.registerTemplate(handle, 'myTemplate', template, $rootScope.AvailableChannels).done(registrationSuccess, registrationFailure);
+                console.log($rootScope.mobileServiceClient);
+            } else if (device.platform === 'iOS') {
+                // Template registration.
+                //var template = '{"aps": {"alert": "$(message)"}}';
+                var alertTemplate = "{\"aps\":{\"alert\":\"$(message)\",\"title\":\"$(title)\",\"message\":\"$(message)\",\"image\":\"$(image)\",\"channels\":\"$(channels)\",\"docID\":\"$(docID)\", \"additionalData\":\"$(additionalData)\"}}";
+                // Register for notifications.      
+                console.log(handle);
+                //  mobileServiceClient.push.apns.registerTemplate(handle,
+                //     'myTemplate', template, null)
+                //  .done(registrationSuccess, registrationFailure);
+                $rootScope.mobileServiceClient.push.apns.registerNative(data.registrationId, $rootScope.AvailableChannels).done(registrationSuccess, registrationFailure);
+            }
+        });
+
+        var registrationSuccess = function() {
+            $rootScope.ShowToast("Registered with Server!",false);
+        }
+        var registrationFailure = function(error) {
+            $rootScope.ShowToast("Failed registering with Server", false);
+            console.log('Failed registering with Server: ' + error);
+        }
+    }
 })

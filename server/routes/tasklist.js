@@ -1,4 +1,6 @@
+ var azure = require('azure');
  var DocumentDBClient = require('documentdb').DocumentClient;
+ var notificationHubService = azure.createNotificationHubService('sosnotification', 'Endpoint=sb://sosnotificationnamespace.servicebus.windows.net/;SharedAccessKeyName=DefaultFullSharedAccessSignature;SharedAccessKey=7iss0kyJDs+3otw+eovAQ2NkcAp6Nc6s6aaGDPjcF8M=');
  var async = require('async');
  var fs = require('fs');
 
@@ -91,14 +93,35 @@
                      res.send({"result": "failure"})
                      console.log(err);
                  } else {
-                    res.send({"result": "done"}); //"failure"
+					 
+					 var data = { "title": "New Notification", "message": "newsfeed from Code White: ", "image": "icon", "channels": "", "docID": "", "additionalData": "" };
+                     console.log('template is' + JSON.stringify(data));
+                                                  
+                     notificationHubService.send(null, data, function (error) {
+                       if (!error) {
+                         console.warn("Notification successful");
+                       }
+                     });
+
+                     var template = {
+                          alert: 'This is my toast message for iOS!', info: "hey"
+                     }
+
+                     notificationHubService.apns.send(null, template, function (error) {
+                       if (!error) {
+                          console.warn("Notification successful");
+                       }
+                     });
+
+                     res.send({"result": "done"}); //"failure"
                  }
               });
 			 } else {  //if no document exists then create new document
 				self.addTask(req, res);
 			 } 
          });  
-    },
+    }
+	/*,
 	
 	editTask: function(req, res){
 		console.log("entered edit tasklist"); 
@@ -166,5 +189,5 @@
 		     }
 		 })	
 	}
- 
+ */
  };
