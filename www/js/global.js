@@ -9,7 +9,7 @@ angular.module('starter.global', []).controller('globalCtrl', function($rootScop
             });
         }
     }
-   
+
     // localStorage.setItem('recieverNumbers', '');
     //localStorage.setItem('senderDetails', '');
     $rootScope.recieverNumbers = [];
@@ -104,7 +104,7 @@ angular.module('starter.global', []).controller('globalCtrl', function($rootScop
 
     $rootScope.showDbLoading = function() {
         $ionicLoading.show({
-            template: 'Loading...', 
+            template: 'Loading...',
             duration: 6000
         }).then(function() {
             console.log("The loading indicator is now displayed");
@@ -118,17 +118,18 @@ angular.module('starter.global', []).controller('globalCtrl', function($rootScop
     }
     ;
 
-    $rootScope.mobileServiceClient = new WindowsAzure.MobileServiceClient('http://codewhiteapp.azurewebsites.net','AAAAJDkTxNQ:APA91bG5-OJmavDwBwJr3miKwgsgrsfKLehmKdO3-UfyUSW9KJjQfy_Y2ZHKTfP9KU3qTbpH4zuC8F_jvaklSHRP8mm6aIqml4WxOQpOHo7RcAPMwBf5UA1_Pwp6j0ZZWJZ1CTTHavh3');
-     $rootScope.AvailableChannels = null;
-     $rootScope.InitPush = function() {
+   
+    $rootScope.AvailableChannels = null;
+    $rootScope.InitPush = function() {
         // will execute when device is ready, or immediately if the device is already ready.
         console.log("platfromctrl2 ionic.platform.ready function");
+        $rootScope.mobileServiceClient = new WindowsAzure.MobileServiceClient('http://codewhiteapp.azurewebsites.net', 'AAAAiEWECvI:APA91bGMdF8ATvihg_Vn-SkYOqk1--LH0-B849w6Bu3EEjq04vR23W-Hg4nS-SStEqHJOQL2wudeHP5-svLVAgcZRoHTqMXBwUR0Zn2iHx49HYXeWXR1_5wBriq4jXn1EIs0e3UBZyer');
         //gcmapp will deprecated from here 
         // gcmapp.Initialize();
-        
+
         pushNotification = PushNotification.init({
             "android": {
-                "senderID": "155576419540"
+                "senderID": "585281833714"
             },
             "ios": {
                 "alert": "true",
@@ -146,7 +147,7 @@ angular.module('starter.global', []).controller('globalCtrl', function($rootScop
             console.log(data);
             $rootScope.ShowToast(data.message);
             console.log(data.additionalData.docID);
-         /*   
+            /*   
             var doc2req = {};
             doc2req.docID = data.additionalData.docID;
             var req = {
@@ -171,15 +172,14 @@ angular.module('starter.global', []).controller('globalCtrl', function($rootScop
                 console.log(data);
                 //  defer.reject();
             });
-         */   
+         */
             //
             // pull the data from here
             // Reload the items list.
             // app.Storage.getData();
-        
+
         });
-
-
+        
         pushNotification.on('registration', function(data) {
             console.log("registering push notification");
             console.log($rootScope.mobileServiceClient);
@@ -196,10 +196,12 @@ angular.module('starter.global', []).controller('globalCtrl', function($rootScop
                 var template = "{ \"data\" : {\"title\":\"$(title)\",\"message\":\"$(message)\",\"image\":\"$(image)\",\"channels\":\"$(channels)\",\"docID\":\"$(docID)\",\"additionalData\":\"$(additionalData)\"}}"
                 //  var template = '{ "data" : {"message":"$(message)"}}';
                 // Register for notifications.
-                 
-               // $rootScope.mobileServiceClient.push.register(handle, 'myTemplate', template, $rootScope.AvailableChannels).done(registrationSuccess, registrationFailure);
-                $rootScope.mobileServiceClient.push.gcm.registerTemplate(handle, 'myTemplate', template, $rootScope.AvailableChannels).done(registrationSuccess, registrationFailure);
+
+                // $rootScope.mobileServiceClient.push.register(handle, 'myTemplate', template, $rootScope.AvailableChannels).done(registrationSuccess, registrationFailure);
+               // $rootScope.mobileServiceClient.push.gcm.registerTemplate(handle, 'myTemplate', template, $rootScope.AvailableChannels).done(registrationSuccess, registrationFailure);
                 console.log($rootScope.mobileServiceClient);
+                $rootScope.mobileServiceClient.push.register('gcm', handle, template);
+                
             } else if (device.platform === 'iOS') {
                 // Template registration.
                 //var template = '{"aps": {"alert": "$(message)"}}';
@@ -214,7 +216,7 @@ angular.module('starter.global', []).controller('globalCtrl', function($rootScop
         });
 
         var registrationSuccess = function() {
-            $rootScope.ShowToast("Registered with Server!",false);
+            $rootScope.ShowToast("Registered with Server!", false);
         }
         var registrationFailure = function(error) {
             $rootScope.ShowToast("Failed registering with Server", false);
