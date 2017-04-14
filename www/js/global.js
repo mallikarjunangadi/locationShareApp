@@ -200,7 +200,7 @@ angular.module('starter.global', []).controller('globalCtrl', function($rootScop
                 // $rootScope.mobileServiceClient.push.register(handle, 'myTemplate', template, $rootScope.AvailableChannels).done(registrationSuccess, registrationFailure);
                // $rootScope.mobileServiceClient.push.gcm.registerTemplate(handle, 'myTemplate', template, $rootScope.AvailableChannels).done(registrationSuccess, registrationFailure);
                 console.log($rootScope.mobileServiceClient);
-                $rootScope.mobileServiceClient.push.register('gcm', handle, template);
+                $rootScope.mobileServiceClient.push.register('gcm', handle, template).done(registrationSuccess, registrationFailure);
                 
             } else if (device.platform === 'iOS') {
                 // Template registration.
