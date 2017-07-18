@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en-US">
+ <head> 
+  <style>
+     .proAddTable {
+	     margin:auto;
+	 }
+  </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="js/controller.js"></script>
+ </head>
+ <body>
+  <div ng-app="myApp">
+   <div ng-controller="indexCtrl">
+  
+    <form ng-submit="addItem(item)">
+	 <table class="proAddTable">
+      <tr><td>Your Name :</td>          <td><input type="text" name="cname" ng-model="item.cname" required /><br/></td></tr>	 
+	  <tr><td>Contact Number :</td>     <td><input type="tel" name="cnumber" ng-model="item.cnumber" required /><br/></td></tr> 
+	  <tr><td><h3>Add Product </h3></td></tr>
+	  <tr><td>Product category : </td><td><select name="categorySelect" ng-model="item.pcategory">
+	                                       <option value="">choose category</option> 
+                                           <option ng-repeat="category in categoryList" value="{{category}}">{{category}}</option>
+                                          </select>  </td></tr> 
+	  <tr><td>Product Name : </td><td><input type="text" name="name" ng-model="item.pname" required /></td></tr> 
+	  <tr><td>Product Image : </td><td><input type="file" id="inputFileToLoad" onchange="angular.element(this).scope().encodeImageFileAsURL()" required /></td></tr> 
+	  <tr ng-show="item.pimageData"><td>selected image : </td><td><img ng-src={{item.pimageData}} width="100" height="100"></img> </td></tr> 
+	  <tr><td>Product Description : </td> <td><textarea name="desc" rows="4" ng-model="item.pdescription" required></textarea></td></tr> 
+	  <tr><td><input type="submit" value="submit"/></td></tr> 
+	  
+	  </table>
+    </form>
+   </div>
+  </div> 
+ </body>
+</html>

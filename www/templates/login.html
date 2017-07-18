@@ -1,7 +1,7 @@
 <ion-view ng-controller="loginCtrl">
     <ion-content>
         <div id="inputEnterDiv">
-            <h4>Login Page</h4>
+            <h4>Registration Page</h4>
             <div class="list"> 
                 <label class="item item-input item-stacked-label">
                     <span class="input-label">Name</span>
@@ -21,7 +21,7 @@
                     <button class="button button-small" ng-click="addNumber(reciever.number)" ng-disabled="disableNumberAdd">Add</button>
                 </div>
             </div>
-            <button class="button button-block button-balanced" ng-click="saveUser()">Login</button>
+            <button class="button button-block button-balanced" ng-click="saveUser()">Register</button>
             <ion-list>
                 <ion-item ng-repeat="number in recieverNumbers track by number">
                     <span>{{number}}</span>
